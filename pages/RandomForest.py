@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 # Load your trained model (Replace with actual model loading step)
-    model = joblib.load('random_forest_model(1).pkl')  # Example, use joblib or pickle to load your trained model
+model = joblib.load('random_forest_model(1).pkl')  # Example, use joblib or pickle to load your trained model
 
 
 # Fit a random forest classifier (replace with your actual trained model)
@@ -15,8 +15,6 @@ model.fit(data, target)
 
 # Streamlit app interface
 st.title("Cardiovascular Risk Prediction")
-
-
 
 # Encoding user inputs
 gender = 1 if gender == "Male" else 0

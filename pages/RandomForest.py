@@ -83,7 +83,7 @@ if submitted:
     
     with col1:
         # Cardiovascular Risk with thumbs up or down
-        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "💔"
+        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -99,10 +99,10 @@ if submitted:
     with col2:
         # BMI with thumbs up for healthy and custom message for unhealthy
         thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else ""
-        unhealthy_message = "💔" if not (18.5 <= bmi <= 24.9) else ""
+        unhealthy_message = "👎" if not (18.5 <= bmi <= 24.9) else ""
         st.markdown(
             """
-            <div style="width: 250px; height: 180px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
             <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 16px; color: {};">{}</p>

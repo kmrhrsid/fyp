@@ -97,9 +97,8 @@ if submitted:
         )
     
     with col2:
-        # BMI with thumbs up for healthy and custom message for unhealthy
+        # BMI with thumbs up for healthy
         thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -107,9 +106,8 @@ if submitted:
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
-            <p style="font-size: 16px; color: red;">{}</p>
             </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi, unhealthy_message),
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
 

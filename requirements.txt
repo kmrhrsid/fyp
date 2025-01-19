@@ -5,5 +5,4 @@ subprocess
 sys
 streamlit 
 numpy
-sklearn
 pickle

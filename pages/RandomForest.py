@@ -4,7 +4,7 @@ import streamlit as st
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 import pickle
-pip show scikit-learn
+
 pip install scikit-learn
 
 

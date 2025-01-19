@@ -10,6 +10,16 @@ print("Model loaded successfully!")
 # Streamlit app interface
 st.title("Cardiovascular Risk Prediction")
 
+# Quote with a different font and style
+st.markdown(
+    """
+    <p style="font-family:Georgia; color:Gray; font-size:20px;">
+    <i>The greatest wealth is health</i>
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+
 # User input
 age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
 gender = st.selectbox("Gender", ["Female", "Male"])

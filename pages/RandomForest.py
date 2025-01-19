@@ -13,7 +13,7 @@ st.title("Cardiovascular Risk Prediction")
 # Quote with a different font and style
 st.markdown(
     """
-    <p style="font-family:Georgia; color:Gray; font-size:20px;">
+    <p style="font-family:Georgia; color:green; font-size:20px;">
     <i>The greatest wealth is health</i>
     </p>
     """,

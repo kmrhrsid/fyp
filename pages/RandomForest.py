@@ -9,10 +9,10 @@ model = joblib.load('random_forest_model (1).pkl')
 # App title and description
 st.markdown(
     """
-    <h1 style="font-family: 'CabinSketch', cursive; color: DarkSlateGray; font-size: 60px; text-align: center;">
+    <h1 style="font-family: 'Arial', cursive; color: DarkSlateGray; font-size: 65px; text-align: center;">
     Cardiovascular Risk Prediction
     </h1>
-    <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 20px; text-align: center;">
+    <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
     <i>The greatest wealth is health</i>
     </p>
     """,
@@ -21,7 +21,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Enter Your Details")
+    st.subheader("Hi Dear, Enter Your Details")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -119,7 +119,7 @@ if submitted:
         <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
         <i>من جدّ وجد</i>
         </p>
-        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 40px; text-align: center;">
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
         <i>"Whoever works really hard, will succeed"</i>
         </p>
         """,

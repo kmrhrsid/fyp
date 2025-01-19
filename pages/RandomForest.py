@@ -90,7 +90,7 @@ if submitted:
             <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 30px;">{}</p>
+            <p style="font-size: 40px;">{}</p>
             </div>
             """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
             unsafe_allow_html=True
@@ -98,15 +98,15 @@ if submitted:
     
     with col2:
         # BMI with thumbs up for healthy and custom message for unhealthy
-        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else ""
-        unhealthy_message = "👎" if not (18.5 <= bmi <= 24.9) else ""
+        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+        unhealthy_message = "keyypidap .. dongibab with love ❤️" if not (18.5 <= bmi <= 24.9) else ""
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
             <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 30px;">{}</p>
+            <p style="font-size: 40px;">{}</p>
             <p style="font-size: 18px; color: red;">{}</p>
             </div>
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi, unhealthy_message),

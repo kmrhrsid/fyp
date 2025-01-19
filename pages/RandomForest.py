@@ -21,7 +21,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Hi, Enter Your Details <3 ")
+    st.subheader("Enter Your Details")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -82,26 +82,34 @@ if submitted:
     col1, col2 = st.columns([1, 1])
     
     with col1:
+        # Add thumbs-up if the risk percentage is low (<= 50)
+        thumbs_icon_risk = "👍" if risk_percentage <= 50 else ""
+        
         st.markdown(
             """
             <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center;">
             <h3>Cardiovascular Risk (%)</h3>
             <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 30px; color: green;">{}</p>
             </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low"),
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
             unsafe_allow_html=True
         )
     
     with col2:
+        # Add thumbs-up if BMI is in the healthy range (18.5 <= BMI <= 24.9)
+        thumbs_icon_bmi = "👍" if 18.5 <= bmi <= 24.9 else ""
+        
         st.markdown(
             """
             <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center;">
             <h3>BMI (Body Mass Index)</h3>
             <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 30px; color: {};">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 30px; color: green;">{}</p>
             </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy"),
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
 
@@ -111,7 +119,7 @@ if submitted:
         <p style="font-family: Georgia; color: Green ; font-size: 60px; text-align: center;">
         <i>من جدّ وجد</i>
         </p>
-        <p style="font-family: Georgia; color: black ; font-size: 40px; text-align: center;">
+        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
         <i>"Whoever works really hard, will succeed"</i>
         </p>
         """,

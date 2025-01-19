@@ -1,11 +1,12 @@
 import subprocess
 import sys
 import streamlit as st 
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 import pickle
-
-pip install scikit-learn
 
 
 # Initialize and train the Random Forest Classifier

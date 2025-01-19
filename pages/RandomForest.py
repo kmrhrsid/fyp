@@ -7,8 +7,6 @@ import joblib
 model = joblib.load('random_forest_model (1).pkl')
 print("Model loaded successfully!")
 
-import streamlit as st
-
 # Main title with customized font size, style, and centered
 st.markdown(
     """
@@ -28,7 +26,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 
 # User input
 age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
@@ -86,7 +83,7 @@ if st.button("Submit"):
     st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
 
- # Motivational Quote
+    # Motivational Quote
     st.markdown(
         """
         <p style="font-family: Georgia; color: Green ; font-size: 60px; text-align: center;">
@@ -95,11 +92,13 @@ if st.button("Submit"):
         """,
         unsafe_allow_html=True
     )
-# Quote with a meaning 
-st.markdown(
-    """
-    <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
-    <i>" Whoever works really hard, will succeed "</i>
-    </p>
-    """,
-    unsafe_allow_html=True
+
+    # Quote with a meaning 
+    st.markdown(
+        """
+        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
+        <i>" Whoever works really hard, will succeed "</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )

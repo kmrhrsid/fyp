@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import joblib
-import plotly.express as px
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -83,28 +82,6 @@ if st.button("Submit"):
     st.subheader("Prediction Summary")
     st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
-
-    # Add a line chart for risk
-    risk_data_line = pd.DataFrame({
-        "Risk Type": ["Cardiovascular Risk", "No Risk"],
-        "Percentage": [risk_percentage, 100 - risk_percentage]
-    })
-
-    # Plotting line chart
-    line_fig = px.line(
-        risk_data_line,
-        x="Risk Type",
-        y="Percentage",
-        markers=True,
-        title="Risk of Cardiovascular Disease",
-        labels={"Percentage": "Percentage (%)"},
-        line_shape="spline"  # Smooth the line for better appearance
-    )
-
-    # Customize the line chart's appearance
-    line_fig.update_traces(line=dict(color="red", width=3), marker=dict(size=10))
-
-    st.plotly_chart(line_fig)
 
     # Motivational Quote
     st.markdown(

@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 # Load your trained model (Replace with actual model loading step)
-# model = joblib.load('random_forest_model(1).pkl')  # Example, use joblib or pickle to load your trained model
+model = joblib.load('random_forest_model(1).pkl')  # Example, use joblib or pickle to load your trained model
 
 
 # Fit a random forest classifier (replace with your actual trained model)
@@ -26,6 +26,7 @@ cholesterol = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
 # Prepare the input data for prediction
 input_data = np.array([[gender, age, ap_lo, ap_hi, alco, smoke, cholesterol]])
 # User inputs for the selected columns
+
 gender = st.selectbox("Gender", ["Female", "Male"])
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
 ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)

@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 # Fit a random forest classifier (replace with your actual trained model)
 model = RandomForestClassifier()
+
 model.fit(data, target)
 
 # Streamlit app interface

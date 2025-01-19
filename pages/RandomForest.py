@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
 import joblib
 
 # Load the trained model
@@ -33,22 +34,34 @@ input_data = pd.DataFrame({
     'cholesterol': [cholesterol_encoded],
 })
 
-# Debugging: Print feature names
-expected_features = model.feature_names_in_  # Get feature names from the model
-print("Expected features:", expected_features)
-print("Input features:", input_data.columns)
-
 # Align features
-missing_features = set(expected_features) - set(input_data.columns)
-extra_features = set(input_data.columns) - set(expected_features)
+expected_features = model.feature_names_in_
+input_data = input_data[expected_features]
 
-if missing_features or extra_features:
-    st.error(f"Feature mismatch! Missing: {missing_features}, Extra: {extra_features}")
-else:
-    input_data = input_data[expected_features]  # Ensure column alignment
+# Predict the cardiovascular risk
+if st.button("Submit"):
+    prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
+    risk_percentage = round(prediction * 100, 1)
 
-    # Predict the cardiovascular risk
-    if st.button("Submit"):
-        prediction = model.predict(input_data)[0]
-        risk = "Risk of Cardiovascular Disease" if prediction == 1 else "No Risk"
-        st.write(f"Prediction: {risk}")
+    # Gauge chart visualization
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=risk_percentage,
+        gauge={
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "orange"},
+            'steps': [
+                {'range': [0, 50], 'color': "lightgreen"},
+                {'range': [50, 75], 'color': "yellow"},
+                {'range': [75, 100], 'color': "red"}
+            ],
+        },
+        title={'text': "Risk Percentage"}
+    ))
+
+    st.plotly_chart(fig)
+
+    # Display additional metrics
+    st.subheader("Prediction Summary")
+    st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
+    st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")

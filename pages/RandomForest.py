@@ -35,12 +35,22 @@ input_data = pd.DataFrame({
     'alco': [alco_encoded],
 })
 
-# Match feature names
+# Debugging: Print feature names
 expected_features = model.feature_names_in_  # Get feature names from the model
-input_data = input_data[expected_features]  # Ensure column alignment
+print("Expected features:", expected_features)
+print("Input features:", input_data.columns)
 
-# Predict the cardiovascular risk
-if st.button("Submit"):
-    prediction = model.predict(input_data)[0]
-    risk = "Risk of Cardiovascular Disease" if prediction == 1 else "No Risk"
-    st.write(f"Prediction: {risk}")
+# Align features
+missing_features = set(expected_features) - set(input_data.columns)
+extra_features = set(input_data.columns) - set(expected_features)
+
+if missing_features or extra_features:
+    st.error(f"Feature mismatch! Missing: {missing_features}, Extra: {extra_features}")
+else:
+    input_data = input_data[expected_features]  # Ensure column alignment
+
+    # Predict the cardiovascular risk
+    if st.button("Submit"):
+        prediction = model.predict(input_data)[0]
+        risk = "Risk of Cardiovascular Disease" if prediction == 1 else "No Risk"
+        st.write(f"Prediction: {risk}")

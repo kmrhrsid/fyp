@@ -8,8 +8,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 import pickle
 
-pip install --force-reinstall scikit-learn
-
 # Initialize and train the Random Forest Classifier
 rf_classifier = RandomForestClassifier(n_estimators=50, max_depth=5, min_samples_split=10, random_state=0) # You can adjust hyperparameters
 #rf_classifier = RandomForestClassifier(n_estimators=100,random_state=0) # You can adjust hyperparameters

@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.express as px
 import joblib
 
 # Load the trained model
@@ -10,7 +9,7 @@ model = joblib.load('random_forest_model (1).pkl')
 # App title and description
 st.markdown(
     """
-    <h1 style="font-family: HelloFirstieBig; color: DarkSlateGray; font-size: 40px; text-align: center;">
+    <h1 style="font-family: HelloFirstieBig; color: DarkSlateGray; font-size: 60px; text-align: center;">
     Cardiovascular Risk Prediction
     </h1>
     <p style="font-family: Georgia; color: Green ; font-size: 20px; text-align: center;">
@@ -82,25 +81,6 @@ if submitted:
     # Display metrics
     st.metric("Cardiovascular Risk (%)", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{bmi} kg/m²", delta="Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy")
-
-    # Pie chart for risk distribution
-    risk_data = pd.DataFrame({
-        "Risk Type": ["Cardiovascular Risk", "No Risk"],
-        "Percentage": [risk_percentage, 100 - risk_percentage]
-    })
-    pie_fig = px.pie(risk_data, values="Percentage", names="Risk Type", 
-                     title="Risk Distribution", 
-                     color_discrete_map={"Cardiovascular Risk": "red", "No Risk": "lightgreen"})
-    st.plotly_chart(pie_fig)
-
-    # Scatter plot for BMI vs risk (hypothetical data for visualization)
-    scatter_data = pd.DataFrame({
-        "BMI": [bmi, 22, 27, 30],
-        "Risk (%)": [risk_percentage, 20, 60, 85]
-    })
-    scatter_fig = px.scatter(scatter_data, x="BMI", y="Risk (%)", title="BMI vs Cardiovascular Risk",
-                             labels={"BMI": "BMI (kg/m²)", "Risk (%)": "Risk Percentage (%)"})
-    st.plotly_chart(scatter_fig)
 
     # Motivational Quotes
     st.markdown(

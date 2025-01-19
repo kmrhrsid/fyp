@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 # Example model (replace with your model)
 import joblib
 
-model = joblib.load('random_forest_model(1).pkl')
+model = joblib.load('/random_forest_model(1).pkl')
 print("Model loaded successfully!")
 
 

@@ -9,7 +9,7 @@ model = joblib.load('random_forest_model (1).pkl')
 # App title and description
 st.markdown(
     """
-    <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+    <h1 style="font-family: 'CabinSketch', cursive; color: DarkSlateGray; font-size: 60px; text-align: center;">
     Cardiovascular Risk Prediction
     </h1>
     <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 20px; text-align: center;">
@@ -21,7 +21,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Hi, Welcome ... ")
+    st.subheader("Enter Your Details")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -78,7 +78,7 @@ if submitted:
     ))
     st.plotly_chart(gauge_fig)
 
-    # Display metrics in boxes with specific size
+    # Display metrics in boxes with relevant size
     col1, col2 = st.columns([1, 1])
     
     with col1:
@@ -86,10 +86,10 @@ if submitted:
         thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "💔"
         st.markdown(
             """
-            <div style="width: 3mm; height: 2mm; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3>Cardiovascular Risk (%)</h3>
-            <p style="font-size: 20px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 15px; color: {};">{}</p>
+            <div style="width: 250px; height: 150px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 16px; color: {};">{}</p>
             <p style="font-size: 30px;">{}</p>
             </div>
             """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
@@ -102,12 +102,12 @@ if submitted:
         unhealthy_message = "keyypidap .. dongibab with love ❤️" if not (18.5 <= bmi <= 24.9) else ""
         st.markdown(
             """
-            <div style="width: 3cm; height: 2cm; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3>BMI (Body Mass Index)</h3>
-            <p style="font-size: 20px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 15px; color: {};">{}</p>
+            <div style="width: 250px; height: 150px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 16px; color: {};">{}</p>
             <p style="font-size: 30px;">{}</p>
-            <p style="font-size: 30px; color: red;">{}</p>
+            <p style="font-size: 18px; color: red;">{}</p>
             </div>
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi, unhealthy_message),
             unsafe_allow_html=True
@@ -116,7 +116,7 @@ if submitted:
     # Motivational Quotes
     st.markdown(
         """
-        <p style="font-family: 'Arial', cursive; color: black ; font-size: 60px; text-align: center;">
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
         <i>من جدّ وجد</i>
         </p>
         <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 40px; text-align: center;">

@@ -1,25 +1,18 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 import joblib
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
-print("Model loaded successfully!")
 
-# Main title with customized font size, style, and centered
+# App title and description
 st.markdown(
     """
     <h1 style="font-family: HelloFirstieBig; color: DarkSlateGray; font-size: 40px; text-align: center;">
     Cardiovascular Risk Prediction
     </h1>
-    """,
-    unsafe_allow_html=True
-)
-
-# Quote with a different font, style, and centered
-st.markdown(
-    """
     <p style="font-family: Georgia; color: Green ; font-size: 20px; text-align: center;">
     <i>The greatest wealth is health</i>
     </p>
@@ -27,41 +20,50 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# User input
-age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
-gender = st.selectbox("Gender", ["Female", "Male"])
-height = st.number_input("Height (cm)", min_value=100, max_value=250)
-weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
-ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
-ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
-cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
+# User input form
+with st.form("user_input_form"):
+    st.subheader("Enter Your Details")
+    age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
+    gender = st.selectbox("Gender", ["Female", "Male"])
+    height = st.number_input("Height (cm)", min_value=100, max_value=250)
+    weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
+    ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
+    ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
+    cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
+    
+    # Submit button
+    submitted = st.form_submit_button("Submit")
 
-# Preprocessing
-gender_encoded = 1 if gender == "Male" else 0
-cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
+if submitted:
+    # Preprocessing
+    gender_encoded = 1 if gender == "Male" else 0
+    cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
+    bmi = round(weight / ((height / 100) ** 2), 1)
 
-# Create raw input DataFrame
-input_data = pd.DataFrame({
-    'age_years': [age],
-    'gender': [gender_encoded],
-    'height': [height],
-    'weight': [weight],
-    'ap_lo': [ap_lo],
-    'ap_hi': [ap_hi],
-    'cholesterol': [cholesterol_encoded],
-})
+    # Create input DataFrame
+    input_data = pd.DataFrame({
+        'age_years': [age],
+        'gender': [gender_encoded],
+        'height': [height],
+        'weight': [weight],
+        'ap_lo': [ap_lo],
+        'ap_hi': [ap_hi],
+        'cholesterol': [cholesterol_encoded],
+    })
 
-# Align features
-expected_features = model.feature_names_in_
-input_data = input_data[expected_features]
+    # Align with model features
+    expected_features = model.feature_names_in_
+    input_data = input_data[expected_features]
 
-# Predict the cardiovascular risk
-if st.button("Submit"):
+    # Prediction
     prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
     risk_percentage = round(prediction * 100, 1)
 
+    # Results Section
+    st.subheader("Prediction Results")
+
     # Gauge chart visualization
-    fig = go.Figure(go.Indicator(
+    gauge_fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=risk_percentage,
         gauge={
@@ -75,27 +77,37 @@ if st.button("Submit"):
         },
         title={'text': "Risk Percentage"}
     ))
+    st.plotly_chart(gauge_fig)
 
-    st.plotly_chart(fig)
+    # Display metrics
+    st.metric("Cardiovascular Risk (%)", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
+    st.metric("BMI (Body Mass Index)", f"{bmi} kg/m²", delta="Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy")
 
-    # Display additional metrics
-    st.subheader("Prediction Summary")
-    st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
-    st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
+    # Pie chart for risk distribution
+    risk_data = pd.DataFrame({
+        "Risk Type": ["Cardiovascular Risk", "No Risk"],
+        "Percentage": [risk_percentage, 100 - risk_percentage]
+    })
+    pie_fig = px.pie(risk_data, values="Percentage", names="Risk Type", 
+                     title="Risk Distribution", 
+                     color_discrete_map={"Cardiovascular Risk": "red", "No Risk": "lightgreen"})
+    st.plotly_chart(pie_fig)
 
-    # Motivational Quote
+    # Scatter plot for BMI vs risk (hypothetical data for visualization)
+    scatter_data = pd.DataFrame({
+        "BMI": [bmi, 22, 27, 30],
+        "Risk (%)": [risk_percentage, 20, 60, 85]
+    })
+    scatter_fig = px.scatter(scatter_data, x="BMI", y="Risk (%)", title="BMI vs Cardiovascular Risk",
+                             labels={"BMI": "BMI (kg/m²)", "Risk (%)": "Risk Percentage (%)"})
+    st.plotly_chart(scatter_fig)
+
+    # Motivational Quotes
     st.markdown(
         """
         <p style="font-family: Georgia; color: Green ; font-size: 60px; text-align: center;">
         <i>من جدّ وجد</i>
         </p>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Quote with a meaning 
-    st.markdown(
-        """
         <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
         <i>"Whoever works really hard, will succeed"</i>
         </p>

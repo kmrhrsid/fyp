@@ -1,9 +1,10 @@
-import pandas as pd
-import numpy as np
 import streamlit as st
 
-chart_data = pd.DataFrame(
-    np.random.randn(20, 3),
-    columns=['a', 'b', 'c'])
+st.title("Simple Streamlit App")
+st.write("Enter your details below:")
 
-st.line_chart(chart_data)
+name = st.text_input("What's your name?")
+age = st.number_input("What's your age?", min_value=0)
+
+if st.button("Submit"):
+    st.success(f"Hello, {name}! You are {age} years old.")

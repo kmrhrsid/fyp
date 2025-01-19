@@ -102,12 +102,12 @@ if submitted:
         unhealthy_message = "keyypidap .. dongibab with ❤️" if not (18.5 <= bmi <= 24.9) else ""
         st.markdown(
             """
-            <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center; font-family: 'CabinSketchbold', cursive;">
             <h3>BMI (Body Mass Index)</h3>
             <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
-            <p style="font-size: 40px; color: red;">{}</p>
+            <p style="font-size: 20px; color: black;">{}</p>
             </div>
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi, unhealthy_message),
             unsafe_allow_html=True

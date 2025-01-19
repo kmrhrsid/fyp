@@ -85,3 +85,21 @@ if st.button("Submit"):
     st.subheader("Prediction Summary")
     st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
+
+ # Motivational Quote
+    st.markdown(
+        """
+        <p style="font-family: Georgia; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+# Quote with a meaning 
+st.markdown(
+    """
+    <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
+    <i>" Whoever works really hard, will succeed "</i>
+    </p>
+    """,
+    unsafe_allow_html=True

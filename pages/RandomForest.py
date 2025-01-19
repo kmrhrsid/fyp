@@ -32,7 +32,6 @@ st.title("Cardiovascular Risk Prediction")
 
 # User inputs for the selected columns
 gender = st.selectbox("Gender", ["Female", "Male"])
-age = st.number_input("Age (years)", min_value=0, max_value=120)
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
 ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
 alco = st.selectbox("Do you drink alcohol?", ["No", "Yes"])

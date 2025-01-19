@@ -96,7 +96,7 @@ if st.button("Submit"):
     # Quote with a meaning 
     st.markdown(
         """
-        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
+        <p style="font-family: Georgia; color: black ; font-size: 40px; text-align: center;">
         <i>" Whoever works really hard, will succeed "</i>
         </p>
         """,

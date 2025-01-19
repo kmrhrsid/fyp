@@ -12,8 +12,8 @@ st.title("Cardiovascular Risk Prediction")
 # User input
 age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
 gender = st.selectbox("Gender", ["Female", "Male"])
-height = st.number_input("Height (cm)", min_value=100, max_value=250)
-weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
+height = st.number_input("Height (cm)", min_value=100, max_value=250, value=170)
+weight = st.number_input("Weight (kg)", min_value=30, max_value=200, value=70)
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
 ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
 

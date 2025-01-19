@@ -89,7 +89,7 @@ if submitted:
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
             <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 16px; color: {};">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 30px;">{}</p>
             </div>
             """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
@@ -105,7 +105,7 @@ if submitted:
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
             <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 16px; color: {};">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 30px;">{}</p>
             <p style="font-size: 18px; color: red;">{}</p>
             </div>

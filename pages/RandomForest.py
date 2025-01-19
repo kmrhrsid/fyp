@@ -86,7 +86,7 @@ if submitted:
         thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "💔"
         st.markdown(
             """
-            <div style="width: 3cm; height: 2cm; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <div style="width: 3mm; height: 2mm; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
             <h3>Cardiovascular Risk (%)</h3>
             <p style="font-size: 20px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 15px; color: {};">{}</p>

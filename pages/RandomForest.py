@@ -28,10 +28,13 @@ cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High
 
 # Create raw input DataFrame
 input_data = pd.DataFrame({
-    'item_code': [item_code],
-    'premise_type': [premise_type],
-    'district': [district],
-    'month': [month]
+    'age': [age],
+    'gender': [gender],
+    'ap_lo': [ap_lo],
+    'ap_hi': [ap_hi],
+    'cholesterol': [cholesterol],
+    'smoke': [smoke],
+    'alco': [alco],
 })
 
 

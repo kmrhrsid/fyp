@@ -13,7 +13,7 @@ st.markdown(
     Cardiovascular Risk Prediction
     </h1>
     <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-    <i>The greatest wealth is health</i>
+    <i>"The greatest wealth is health"</i>
     </p>
     """,
     unsafe_allow_html=True

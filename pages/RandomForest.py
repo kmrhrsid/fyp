@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import joblib
+import plotly.express as px
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -83,6 +84,18 @@ if st.button("Submit"):
     st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
 
+    # Add a bar chart for risk
+    risk_data = pd.DataFrame({
+        "Risk Type": ["Cardiovascular Risk", "No Risk"],
+        "Percentage": [risk_percentage, 100 - risk_percentage]
+    })
+
+    # Plotting bar chart
+    bar_fig = px.bar(risk_data, x="Risk Type", y="Percentage", color="Risk Type", title="Risk of Cardiovascular Disease",
+                     labels={"Percentage": "Percentage (%)"}, color_discrete_map={"Cardiovascular Risk": "red", "No Risk": "lightgreen"})
+    
+    st.plotly_chart(bar_fig)
+
     # Motivational Quote
     st.markdown(
         """
@@ -96,7 +109,7 @@ if st.button("Submit"):
     # Quote with a meaning 
     st.markdown(
         """
-        <p style="font-family: Georgia; color: black ; font-size: 40px; text-align: center;">
+        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
         <i>" Whoever works really hard, will succeed "</i>
         </p>
         """,

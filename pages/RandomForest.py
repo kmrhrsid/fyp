@@ -21,7 +21,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Enter Your Details")
+    st.subheader("Hi, Enter Your Details <3 ")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)

@@ -26,9 +26,14 @@ alco = st.selectbox("Do you drink alcohol?", ["No", "Yes"])
 smoke = st.selectbox("Do you smoke?", ["No", "Yes"])
 cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
 
-# Prepare the input data for prediction
-input_data = np.array([[gender, age, ap_lo, ap_hi, alco, smoke, cholesterol]])
-# User inputs for the selected columns
+# Create raw input DataFrame
+input_data = pd.DataFrame({
+    'item_code': [item_code],
+    'premise_type': [premise_type],
+    'district': [district],
+    'month': [month]
+})
+
 
 # Predict the cardiovascular risk
 if st.button("Submit"):

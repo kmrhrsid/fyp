@@ -84,17 +84,27 @@ if st.button("Submit"):
     st.metric("Risk of Cardiovascular Disease", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
     st.metric("BMI (Body Mass Index)", f"{round(weight / (height / 100) ** 2, 1)} kg/m²")
 
-    # Add a bar chart for risk
-    risk_data = pd.DataFrame({
+    # Add a line chart for risk
+    risk_data_line = pd.DataFrame({
         "Risk Type": ["Cardiovascular Risk", "No Risk"],
         "Percentage": [risk_percentage, 100 - risk_percentage]
     })
 
-    # Plotting bar chart
-    bar_fig = px.bar(risk_data, x="Risk Type", y="Percentage", color="Risk Type", title="Risk of Cardiovascular Disease",
-                     labels={"Percentage": "Percentage (%)"}, color_discrete_map={"Cardiovascular Risk": "red", "No Risk": "lightgreen"})
-    
-    st.plotly_chart(bar_fig)
+    # Plotting line chart
+    line_fig = px.line(
+        risk_data_line,
+        x="Risk Type",
+        y="Percentage",
+        markers=True,
+        title="Risk of Cardiovascular Disease",
+        labels={"Percentage": "Percentage (%)"},
+        line_shape="spline"  # Smooth the line for better appearance
+    )
+
+    # Customize the line chart's appearance
+    line_fig.update_traces(line=dict(color="red", width=3), marker=dict(size=10))
+
+    st.plotly_chart(line_fig)
 
     # Motivational Quote
     st.markdown(
@@ -110,7 +120,7 @@ if st.button("Submit"):
     st.markdown(
         """
         <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
-        <i>" Whoever works really hard, will succeed "</i>
+        <i>"Whoever works really hard, will succeed"</i>
         </p>
         """,
         unsafe_allow_html=True

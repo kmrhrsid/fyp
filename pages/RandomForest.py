@@ -9,7 +9,7 @@ model = joblib.load('random_forest_model (1).pkl')
 # App title and description
 st.markdown(
     """
-    <h1 style="font-family: 'Arial', cursive; color: DarkSlateGray; font-size: 65px; text-align: center;">
+    <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
     Cardiovascular Risk Prediction
     </h1>
     <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">

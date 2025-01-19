@@ -99,7 +99,7 @@ if submitted:
             <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center;">
             <h3>BMI (Body Mass Index)</h3>
             <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 30px; color: {};">{}</p>
             </div>
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy"),
             unsafe_allow_html=True
@@ -111,7 +111,7 @@ if submitted:
         <p style="font-family: Georgia; color: Green ; font-size: 60px; text-align: center;">
         <i>من جدّ وجد</i>
         </p>
-        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
+        <p style="font-family: Georgia; color: black ; font-size: 40px; text-align: center;">
         <i>"Whoever works really hard, will succeed"</i>
         </p>
         """,

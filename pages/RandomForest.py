@@ -12,7 +12,7 @@ st.title("Cardiovascular Risk Prediction")
 col1, col2 = st.columns(2)
 
 with col1:
-    male_img = Image.open("male_image.png")  # Replace with actual path to male image
+    male_img = Image.open("https://www.google.com/imgres?q=male%20gender&imgurl=https%3A%2F%2Fw7.pngwing.com%2Fpngs%2F1003%2F678%2Fpng-transparent-gender-male-female-thumbnail.png&imgrefurl=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3DMale%2BGender&docid=c1VrThxd8Hj1PM&tbnid=37gy2--CMyMwwM&vet=12ahUKEwiX-4GPsoGLAxWAmq8BHSvYIL0QM3oECH8QAA..i&w=360&h=389&hcb=2&ved=2ahUKEwiX-4GPsoGLAxWAmq8BHSvYIL0QM3oECH8QAA")  # Replace with actual path to male image
     if st.button("Male", key="male"):
         gender = "Male"
         

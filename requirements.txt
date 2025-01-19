@@ -5,4 +5,4 @@ pandas
 scikit-learn
 streamlit 
 numpy
-pickle
+pickle==3.7

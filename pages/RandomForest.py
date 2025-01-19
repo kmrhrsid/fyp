@@ -18,6 +18,7 @@ st.title("Cardiovascular Risk Prediction")
 #smoke = 1 if smoke == "Yes" else 0
 #cholesterol = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
 
+age = st.slider('Age', min_value=20, max_value=80, value=50)
 gender = st.selectbox("Gender", ["Female", "Male"])
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
 ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)

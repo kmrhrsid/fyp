@@ -7,18 +7,28 @@ import joblib
 model = joblib.load('random_forest_model (1).pkl')
 print("Model loaded successfully!")
 
-# Streamlit app interface
-st.title("Cardiovascular Risk Prediction")
+import streamlit as st
 
-# Quote with a different font and style
+# Main title with customized font size, style, and centered
 st.markdown(
     """
-    <p style="font-family:Georgia; color:green; font-size:20px;">
+    <h1 style="font-family: HelloFirstieBig; color: DarkSlateGray; font-size: 40px; text-align: center;">
+    Cardiovascular Risk Prediction
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+
+# Quote with a different font, style, and centered
+st.markdown(
+    """
+    <p style="font-family: Georgia; color: Green ; font-size: 20px; text-align: center;">
     <i>The greatest wealth is health</i>
     </p>
     """,
     unsafe_allow_html=True
 )
+
 
 # User input
 age = st.slider('Age (years)', min_value=20, max_value=80, value=50)

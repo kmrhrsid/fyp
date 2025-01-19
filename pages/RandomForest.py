@@ -16,7 +16,7 @@ st.title("Cardiovascular Risk Prediction")
 #gender = 1 if gender == "Male" else 0
 #alco = 1 if alco == "Yes" else 0
 #smoke = 1 if smoke == "Yes" else 0
-cholesterol = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
+#cholesterol = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
 
 gender = st.selectbox("Gender", ["Female", "Male"])
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)

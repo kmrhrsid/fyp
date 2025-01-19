@@ -78,9 +78,32 @@ if submitted:
     ))
     st.plotly_chart(gauge_fig)
 
-    # Display metrics
-    st.metric("Cardiovascular Risk (%)", f"{risk_percentage}%", delta="High" if risk_percentage > 50 else "Low")
-    st.metric("BMI (Body Mass Index)", f"{bmi} kg/m²", delta="Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy")
+    # Display metrics in boxes
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        st.markdown(
+            """
+            <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center;">
+            <h3>Cardiovascular Risk (%)</h3>
+            <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            </div>
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low"),
+            unsafe_allow_html=True
+        )
+    
+    with col2:
+        st.markdown(
+            """
+            <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; text-align: center;">
+            <h3>BMI (Body Mass Index)</h3>
+            <p style="font-size: 30px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            </div>
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy"),
+            unsafe_allow_html=True
+        )
 
     # Motivational Quotes
     st.markdown(

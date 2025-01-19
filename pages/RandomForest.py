@@ -10,29 +10,24 @@ print("Model loaded successfully!")
 st.title("Cardiovascular Risk Prediction")
 
 # User input
-age = st.slider('Age', min_value=20, max_value=80, value=50)
+age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
 gender = st.selectbox("Gender", ["Female", "Male"])
+height = st.number_input("Height (cm)", min_value=100, max_value=250)
+weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
 ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
 ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
-alco = st.selectbox("Do you drink alcohol?", ["No", "Yes"])
-smoke = st.selectbox("Do you smoke?", ["No", "Yes"])
-cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
 
 # Preprocessing
 gender_encoded = 1 if gender == "Male" else 0
-alco_encoded = 1 if alco == "Yes" else 0
-smoke_encoded = 1 if smoke == "Yes" else 0
-cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
 
 # Create raw input DataFrame
 input_data = pd.DataFrame({
-    'age': [age],
+    'age_years': [age],   # Renamed to match the model
     'gender': [gender_encoded],
+    'height': [height],   # New input field
+    'weight': [weight],   # New input field
     'ap_lo': [ap_lo],
     'ap_hi': [ap_hi],
-    'cholesterol': [cholesterol_encoded],
-    'smoke': [smoke_encoded],
-    'alco': [alco_encoded],
 })
 
 # Debugging: Print feature names

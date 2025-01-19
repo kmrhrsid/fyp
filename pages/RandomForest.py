@@ -18,7 +18,8 @@ data = pd.DataFrame({
     'smoke': [0, 1],  # 0: No, 1: Yes (smoking status)
     'cholesterol': [1, 2],  # 1: Normal, 2: Above Normal (cholesterol)
 })
-
+# Age input as a slider
+age = st.slider("Age (years)", min_value=0, max_value=120, value=25)
 # Dummy target for the model (replace with actual target variable)
 target = [0, 1]  # 0: No risk, 1: Risk (example)
 

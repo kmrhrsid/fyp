@@ -107,7 +107,7 @@ if submitted:
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
-            <p style="font-size: 18px; color: red;">{}</p>
+            <p style="font-size: 16px; color: red;">{}</p>
             </div>
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi, unhealthy_message),
             unsafe_allow_html=True

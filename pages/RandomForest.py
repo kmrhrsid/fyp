@@ -37,3 +37,4 @@ if st.button("Submit"):
     prediction = model.predict(input_data)
     risk = "Risk of Cardiovascular Disease" if prediction[0] == 1 else "No Risk"
     st.write(f"Prediction: {risk}")
+

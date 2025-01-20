@@ -1,11 +1,18 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import joblib
 
-# Load the trained model
+# Load the trained logistic regression model
 model = joblib.load('logreg_model.pkl')
+
+# Check if a scaler is needed and load it
+try:
+    scaler = joblib.load('scaler.pkl')  # Load the scaler if it was saved during training
+    use_scaler = True
+except FileNotFoundError:
+    scaler = None
+    use_scaler = False
 
 # App title and description
 st.markdown(
@@ -22,7 +29,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Hi Dear, Enter Your Details")
+    st.subheader("Enter Your Details")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -30,12 +37,12 @@ with st.form("user_input_form"):
     ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
     ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
     cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
-    
+
     # Submit button
     submitted = st.form_submit_button("Submit")
 
 if submitted:
-    # Preprocessing
+    # Preprocess user input
     gender_encoded = 1 if gender == "Male" else 0
     cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
     bmi = round(weight / ((height / 100) ** 2), 1)
@@ -51,15 +58,19 @@ if submitted:
         'cholesterol': [cholesterol_encoded],
     })
 
-    # Align with model features
+    # Align input data with model features
     expected_features = model.feature_names_in_
     input_data = input_data[expected_features]
 
-    # Prediction
+    # Scale the input data if a scaler is used
+    if use_scaler:
+        input_data = scaler.transform(input_data)
+
+    # Make prediction
     prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
     risk_percentage = round(prediction * 100, 1)
 
-    # Results Section
+    # Display the results
     st.subheader("Prediction Results")
 
     # Gauge chart visualization
@@ -79,40 +90,42 @@ if submitted:
     ))
     st.plotly_chart(gauge_fig)
 
-    # Display metrics in boxes with relevant size
+    # Display additional metrics
     col1, col2 = st.columns([1, 1])
-    
+
     with col1:
-        # Cardiovascular Risk with thumbs up or down
         thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
         st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            f"""
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center;">
             <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
+            <p style="font-size: 24px; color: DarkSlateGray;">{risk_percentage}</p>
+            <p style="font-size: 20px; color: {"green" if risk_percentage <= 50 else "red"};">
+            {"Low" if risk_percentage <= 50 else "High"}
+            </p>
+            <p style="font-size: 40px;">{thumbs_icon_risk}</p>
             </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
-            unsafe_allow_html=True
-        )
-    
-    with col2:
-        # BMI with thumbs up for healthy
-        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-        st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
-            </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+            """,
             unsafe_allow_html=True
         )
 
-    # Motivational Quotes
+    with col2:
+        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+        st.markdown(
+            f"""
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center;">
+            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
+            <p style="font-size: 20px; color: {"green" if 18.5 <= bmi <= 24.9 else "red"};">
+            {"Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy"}
+            </p>
+            <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # Motivational quotes
     st.markdown(
         """
         <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">

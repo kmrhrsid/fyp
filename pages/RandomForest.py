@@ -127,20 +127,22 @@ if submitted:
         unsafe_allow_html=True
     )
 
-    # Facial Expression Feedback
-    st.subheader("How do you feel about the app?")
-    feedback_emoji = st.radio(
-        "Choose an emoji to share your experience:",
-        ('😊', '😐', '😞', '😡')
-    )
-
-    if feedback_emoji:
-        st.write(f"Your feedback: {feedback_emoji}")
-        if feedback_emoji == '😊':
-            st.success("Thank you for your positive feedback!")
-        elif feedback_emoji == '😐':
-            st.info("Thanks for your feedback! We're always looking to improve.")
-        elif feedback_emoji == '😞':
-            st.warning("Sorry to hear you're not satisfied. We'll work on it.")
-        elif feedback_emoji == '😡':
-            st.error("We apologize for any issues. Please let us know what went wrong.")
+    # Star Rating Feedback
+    st.subheader("How would you rate your experience?")
+    
+    rating = st.slider("Rate from 1 to 5 stars:", 1, 5, 3)
+    
+    # Display the rating as stars
+    stars = "⭐" * rating
+    st.write(f"Your rating: {stars}")
+    
+    if rating == 5:
+        st.success("Thank you for the perfect rating! We're glad you liked it!")
+    elif rating == 4:
+        st.success("Thank you for your feedback! We're happy to hear that you had a good experience.")
+    elif rating == 3:
+        st.info("Thanks for your feedback! We'll strive to improve.")
+    elif rating == 2:
+        st.warning("Sorry to hear your experience wasn't great. We'll work on improving it.")
+    elif rating == 1:
+        st.error("We apologize for the poor experience. Please let us know what went wrong.")

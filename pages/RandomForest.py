@@ -140,11 +140,12 @@ if submitted:
     # Feedback comments
     feedback = st.text_area("Leave your feedback or comments here:")
     
-    # Rating Section
-    rating = st.slider("Rate your experience", 1, 5, 3)
-    
-    # Face emoji based on rating
-    feedback_face = "😊" if rating >= 4 else "😞"
+    # Submit button for feedback
+    feedback_submitted = st.button("Submit Feedback")
+
+    if feedback_submitted:
+        st.write(f"Thank you for your feedback! You rated us {rating} out of 5.")
+        st.write("Your comments:", feedback)
 
     # Motivational Quotes
     st.markdown(

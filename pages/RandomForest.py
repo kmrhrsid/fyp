@@ -127,11 +127,20 @@ if submitted:
         unsafe_allow_html=True
     )
 
-    # Feedback Section
-    st.subheader("Your Feedback")
-    feedback = st.text_area("Please leave your feedback on the application:", height=150)
-    if st.button("Submit Feedback"):
-        if feedback:
-            st.success("Thank you for your feedback!")
-        else:
-            st.warning("Please enter some feedback.")
+    # Facial Expression Feedback
+    st.subheader("How do you feel about the app?")
+    feedback_emoji = st.radio(
+        "Choose an emoji to share your experience:",
+        ('😊', '😐', '😞', '😡')
+    )
+
+    if feedback_emoji:
+        st.write(f"Your feedback: {feedback_emoji}")
+        if feedback_emoji == '😊':
+            st.success("Thank you for your positive feedback!")
+        elif feedback_emoji == '😐':
+            st.info("Thanks for your feedback! We're always looking to improve.")
+        elif feedback_emoji == '😞':
+            st.warning("Sorry to hear you're not satisfied. We'll work on it.")
+        elif feedback_emoji == '😡':
+            st.error("We apologize for any issues. Please let us know what went wrong.")

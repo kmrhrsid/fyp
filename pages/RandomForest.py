@@ -3,6 +3,18 @@ import pandas as pd
 import plotly.graph_objects as go
 import joblib
 
+# Set the background color to light green using custom HTML and CSS
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #90EE90;  /* Light Green */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

@@ -3,26 +3,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import joblib
 
-# Set the background color to light green using custom HTML and CSS
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #90EE90;  /* Light Green */
-    }
-    .stSelectbox>div>div>div>div {
-        background-color: red;  /* Red color for selectbox options */
-        color: white;
-    }
-    .stButton>button {
-        background-color: green;  /* Green color for the submit button */
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 
@@ -130,22 +110,6 @@ if submitted:
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
-
-    # Feedback Section
-    st.subheader("We Value Your Feedback")
-    
-    # Rating Section
-    rating = st.slider("Rate your experience", 1, 5, 3)
-    
-    # Feedback comments
-    feedback = st.text_area("Leave your feedback or comments here:")
-    
-    # Submit button for feedback
-    feedback_submitted = st.button("Submit Feedback")
-
-    if feedback_submitted:
-        st.write(f"Thank you for your feedback! You rated us {rating} out of 5.")
-        st.write("Your comments:", feedback)
 
     # Motivational Quotes
     st.markdown(

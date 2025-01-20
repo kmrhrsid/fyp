@@ -29,8 +29,8 @@ with st.form("user_input_form"):
     ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
     ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
     cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
-    
-    # Color Picker
+
+    # Color Picker widget
     color = st.color_picker("Pick a color for your result", '#FF5733')  # Default color is orange
     
     # Submit button
@@ -126,23 +126,3 @@ if submitted:
         """,
         unsafe_allow_html=True
     )
-
-    # Star Rating Feedback
-    st.subheader("How would you rate your experience?")
-    
-    rating = st.slider("Rate from 1 to 5 stars:", 1, 5, 3)
-    
-    # Display the rating as stars
-    stars = "⭐" * rating
-    st.write(f"Your rating: {stars}")
-    
-    if rating == 5:
-        st.success("Thank you for the perfect rating! We're glad you liked it!")
-    elif rating == 4:
-        st.success("Thank you for your feedback! We're happy to hear that you had a good experience.")
-    elif rating == 3:
-        st.info("Thanks for your feedback! We'll strive to improve.")
-    elif rating == 2:
-        st.warning("Sorry to hear your experience wasn't great. We'll work on improving it.")
-    elif rating == 1:
-        st.error("We apologize for the poor experience. Please let us know what went wrong.")

@@ -10,12 +10,13 @@ st.markdown(
     body {
         background-color: #90EE90;  /* Light Green */
     }
-    .stButton>button {
-        background-color: #4CAF50;  /* Green */
+    .stSelectbox>div>div>div>div {
+        background-color: red;  /* Red color for selectbox options */
         color: white;
-        font-size: 16px;
-        padding: 10px 20px;
-        border-radius: 5px;
+    }
+    .stButton>button {
+        background-color: green;  /* Green color for the submit button */
+        color: white;
     }
     </style>
     """,
@@ -48,7 +49,7 @@ with st.form("user_input_form"):
     ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
     ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
     cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
-
+    
     # Submit button
     submitted = st.form_submit_button("Submit")
 
@@ -101,8 +102,9 @@ if submitted:
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        # Cardiovascular Risk with thumbs up or down
+        # Cardiovascular Risk with thumbs up or down and face emoji
         thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
+        face_emoji = "😊" if risk_percentage <= 50 else "😞"
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -110,8 +112,9 @@ if submitted:
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
+            <p style="font-size: 40px;">{}</p>
             </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk, face_emoji),
             unsafe_allow_html=True
         )
     
@@ -130,6 +133,25 @@ if submitted:
             unsafe_allow_html=True
         )
 
+    # Feedback Section
+    st.subheader("We Value Your Feedback")
+    
+    # Rating Section
+    rating = st.slider("Rate your experience", 1, 5, 3)
+    
+    # Face emoji based on rating
+    feedback_face = "😊" if rating >= 4 else "😞"
+    
+    # Feedback comments
+    feedback = st.text_area("Leave your feedback or comments here:")
+    
+    # Submit button for feedback
+    feedback_submitted = st.button("Submit Feedback")
+
+    if feedback_submitted:
+        st.write(f"Thank you for your feedback! You rated us {rating} out of 5. {feedback_face}")
+        st.write("Your comments:", feedback)
+
     # Motivational Quotes
     st.markdown(
         """
@@ -142,3 +164,4 @@ if submitted:
         """,
         unsafe_allow_html=True
     )
+

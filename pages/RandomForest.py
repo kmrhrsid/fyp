@@ -100,3 +100,26 @@ if submitted:
         # BMI with thumbs up for healthy
         thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
         st.markdown(
+            """
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 40px;">{}</p>
+            </div>
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+            unsafe_allow_html=True
+        )
+
+    # Motivational Quotes
+    st.markdown(
+        """
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
+        <i>"Whoever works really hard, will succeed"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )

@@ -10,12 +10,9 @@ st.markdown(
     body {
         background-color: #90EE90;  /* Light Green */
     }
-    .stButton>button {
-        background-color: #4CAF50;  /* Green */
+    .stSelectbox>div>div>div>div {
+        background-color: red;  /* Red color for selectbox options */
         color: white;
-        font-size: 16px;
-        padding: 10px 20px;
-        border-radius: 5px;
     }
     </style>
     """,
@@ -42,7 +39,10 @@ st.markdown(
 with st.form("user_input_form"):
     st.subheader("Hi Dear, Enter Your Details")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
+    
+    # Gender selection with red color
     gender = st.selectbox("Gender", ["Female", "Male"])
+    
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
     weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
     ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)

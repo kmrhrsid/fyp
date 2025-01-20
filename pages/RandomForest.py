@@ -102,9 +102,8 @@ if submitted:
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        # Cardiovascular Risk with thumbs up or down and face emoji
+        # Cardiovascular Risk with thumbs up or down
         thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
-        face_emoji = "😊" if risk_percentage <= 50 else "😞"
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -112,9 +111,8 @@ if submitted:
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
-            <p style="font-size: 40px;">{}</p>
             </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk, face_emoji),
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
             unsafe_allow_html=True
         )
     
@@ -139,18 +137,14 @@ if submitted:
     # Rating Section
     rating = st.slider("Rate your experience", 1, 5, 3)
     
-    # Face emoji based on rating
-    feedback_face = "😊" if rating >= 4 else "😞"
-    
     # Feedback comments
     feedback = st.text_area("Leave your feedback or comments here:")
     
-    # Submit button for feedback
-    feedback_submitted = st.button("Submit Feedback")
-
-    if feedback_submitted:
-        st.write(f"Thank you for your feedback! You rated us {rating} out of 5. {feedback_face}")
-        st.write("Your comments:", feedback)
+    # Rating Section
+    rating = st.slider("Rate your experience", 1, 5, 3)
+    
+    # Face emoji based on rating
+    feedback_face = "😊" if rating >= 4 else "😞"
 
     # Motivational Quotes
     st.markdown(
@@ -164,4 +158,3 @@ if submitted:
         """,
         unsafe_allow_html=True
     )
-

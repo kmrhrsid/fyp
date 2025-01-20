@@ -30,6 +30,9 @@ with st.form("user_input_form"):
     ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
     cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
     
+    # Color Picker
+    color = st.color_picker("Pick a color for your result", '#FF5733')  # Default color is orange
+    
     # Submit button
     submitted = st.form_submit_button("Submit")
 
@@ -67,7 +70,7 @@ if submitted:
         value=risk_percentage,
         gauge={
             'axis': {'range': [0, 100]},
-            'bar': {'color': "orange"},
+            'bar': {'color': color},  # Use selected color
             'steps': [
                 {'range': [0, 50], 'color': "lightgreen"},
                 {'range': [50, 75], 'color': "yellow"},
@@ -123,3 +126,12 @@ if submitted:
         """,
         unsafe_allow_html=True
     )
+
+    # Feedback Section
+    st.subheader("Your Feedback")
+    feedback = st.text_area("Please leave your feedback on the application:", height=150)
+    if st.button("Submit Feedback"):
+        if feedback:
+            st.success("Thank you for your feedback!")
+        else:
+            st.warning("Please enter some feedback.")

@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import joblib
 
 # Load the trained model
-model = joblib.load('random_forest_model (1).pkl')
+model = joblib.load('logreg_model.pkl')
 
 # App title and description
 st.markdown(

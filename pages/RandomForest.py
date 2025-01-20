@@ -110,6 +110,14 @@ if submitted:
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
+     # Feedback Section
+    st.subheader("We Value Your Feedback")
+    
+    # Rating Section
+    rating = st.slider("Rate your experience", 1, 5, 3)
+    
+    # Face emoji based on rating
+    feedback_face = "😊" if rating >= 4 else "😞"
 
     # Motivational Quotes
     st.markdown(

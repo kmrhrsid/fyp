@@ -5,6 +5,20 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Set the background image using CSS
+background_image_url = "https://img.freepik.com/free-vector/abstract-gradient-background_23-2149238572.jpg"  # Direct image URL
+st.markdown(
+    f"""
+    <style>
+    .reportview-container {{
+        background: url({background_image_url}) no-repeat center center fixed;
+        background-size: cover;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

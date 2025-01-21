@@ -9,24 +9,6 @@ import seaborn as sns
 model = joblib.load('random_forest_model (1).pkl')
 import streamlit as st
 
-# Function to encode the image in Base64
-def add_background_image(image_path):
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode()
-    background_style = f"""
-    <style>
-    [data-testid="stAppViewContainer"] {{
-        background-image: url("data:image/png;base64,{encoded_image}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    """
-    st.markdown(background_style, unsafe_allow_html=True)
-
-# Add your background image here
-add_background_image("loan background.jpg")
 
 # Define feature importance values (based on your data)
 feature_importances = {

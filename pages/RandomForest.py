@@ -25,7 +25,7 @@ feature_importance_series = pd.Series(feature_importances).sort_values(ascending
 st.markdown(
     """
     <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-    Cardiovascular Risk Prediction
+    Cardiovascular Risk Prediction🫀
     </h1>
     <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
     <i>"The greatest wealth is health"</i>

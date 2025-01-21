@@ -8,6 +8,25 @@ import seaborn as sns
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 import streamlit as st
+import streamlit as st
+
+# Set the background image using CSS
+background_image_url = "https://img.freepik.com/free-vector/abstract-gradient-background_23-2149238572.jpg"  # Use the direct image URL
+
+# Apply background image via custom CSS
+st.markdown(
+    f"""
+    <style>
+    .reportview-container {{
+        background: url({background_image_url}) no-repeat center center fixed;
+        background-size: cover;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 
 
 # Define feature importance values (based on your data)

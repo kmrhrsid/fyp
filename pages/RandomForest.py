@@ -75,6 +75,38 @@ if submitted:
 
     # Results Section
     st.subheader("Prediction Results")
+    # Display metrics in boxes with relevant size
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        # Cardiovascular Risk with thumbs up or down
+        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
+        st.markdown(
+            """
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 40px;">{}</p>
+            </div>
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
+            unsafe_allow_html=True
+        )
+    
+    with col2:
+        # BMI with thumbs up for healthy
+        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+        st.markdown(
+            """
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 40px;">{}</p>
+            </div>
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+            unsafe_allow_html=True
+        )
 
     # Gauge chart visualization
     gauge_fig = go.Figure(go.Indicator(

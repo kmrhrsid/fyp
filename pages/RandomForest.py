@@ -75,19 +75,30 @@ if submitted:
 
     # Gauge chart visualization
     gauge_fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=risk_percentage,
-        gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': "orange"},
-            'steps': [
-                {'range': [0, 50], 'color': "lightgreen"},
-                {'range': [50, 75], 'color': "yellow"},
-                {'range': [75, 100], 'color': "red"}
-            ],
-        },
-        title={'text': "Risk Percentage"}
-    ))
+    mode="gauge+number",
+    value=risk_percentage,
+    title={'text': "Cardiovascular Risk (%)"},
+    gauge={
+        'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
+        'bar': {'color': "green" if risk_percentage <= 50 else "orange" if risk_percentage <= 75 else "red"},
+        'steps': [
+            {'range': [0, 50], 'color': "lightgreen"},
+            {'range': [50, 75], 'color': "yellow"},
+            {'range': [75, 100], 'color': "red"}
+        ],
+        'threshold': {
+            'line': {'color': "black", 'width': 4},
+            'thickness': 0.75,
+            'value': risk_percentage
+        }
+    }
+))
+
+# Display the gauge chart in Streamlit
+st.plotly_chart(gauge_fig, use_container_width=True)
+
+
+   
      # Results Section
     st.subheader("Prediction Results")
     # Display metrics in boxes with relevant size

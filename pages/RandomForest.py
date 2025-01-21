@@ -124,11 +124,14 @@ if submitted:
         )
     st.plotly_chart(gauge_fig)
 
-    # Display feature importance
+    # Display feature importance with gradient colors
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
+    # Gradient colors for bars
+    colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e'][:len(feature_importance_series)]
+    
     fig, ax = plt.subplots()
-    feature_importance_series.plot(kind='bar', ax=ax, color='#7A2048')
+    feature_importance_series.plot(kind='bar', ax=ax, color=colors)
     ax.set_title("Feature Importance")
     ax.set_ylabel("Importance Score")
     st.pyplot(fig)

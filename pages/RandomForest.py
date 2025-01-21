@@ -55,6 +55,20 @@ if submitted:
     cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
     bmi = round(weight / ((height / 100) ** 2), 1)
 
+    # Categorize BMI
+    if bmi < 18.5:
+        bmi_category = "Underweight"
+        bmi_color = "red"
+    elif 18.5 <= bmi <= 24.9:
+        bmi_category = "Normal"
+        bmi_color = "green"
+    elif 25 <= bmi <= 29.9:
+        bmi_category = "Overweight"
+        bmi_color = "yellow"
+    else:
+        bmi_category = "Obese"
+        bmi_color = "red"
+
     # Create input DataFrame
     input_data = pd.DataFrame({
         'age_years': [age],
@@ -114,17 +128,17 @@ if submitted:
         )
     
     with col2:
-        # BMI with thumbs up for healthy
-        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+        # BMI with thumbs up or down
+        thumbs_icon_bmi = "❤️" if bmi_category == "Normal" else "👎"
         st.markdown(
             """
             <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <h3 style="font-size: 18px;">BMI Category</h3>
             <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
             <p style="font-size: 20px; color: {};">{}</p>
             <p style="font-size: 40px;">{}</p>
             </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+            """.format(bmi, bmi_color, bmi_category, thumbs_icon_bmi),
             unsafe_allow_html=True
         )
 

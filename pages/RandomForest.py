@@ -1,7 +1,9 @@
+# Load necessary libraries
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import joblib
+import matplotlib.pyplot as plt
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -78,41 +80,30 @@ if submitted:
     ))
     st.plotly_chart(gauge_fig)
 
-    # Display metrics in boxes with relevant size
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        # Cardiovascular Risk with thumbs up or down
-        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
-        st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
-            </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
-            unsafe_allow_html=True
-        )
-    
-    with col2:
-        # BMI with thumbs up for healthy
-        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-        st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
-            </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
-            unsafe_allow_html=True
-        )
-     
+    # Display feature importance
+    st.subheader("Risk Factor Insights")
+    feature_importances = pd.Series(model.feature_importances_, index=expected_features).sort_values(ascending=False)
+    top_features = feature_importances.head(5)
 
-    # Motivational Quotes
+    # Bar chart of feature importances
+    fig, ax = plt.subplots()
+    top_features.plot(kind='bar', ax=ax, color='skyblue')
+    ax.set_title("Top Contributing Factors")
+    ax.set_ylabel("Feature Importance")
+    st.pyplot(fig)
+
+    # Provide tips for reducing risk
+    st.markdown("### Tips for Reducing Cardiovascular Risk:")
+    if 'age_years' in top_features.index:
+        st.write("- **Age**: Maintain regular health checkups and a heart-healthy lifestyle as you age.")
+    if 'ap_hi' in top_features.index or 'ap_lo' in top_features.index:
+        st.write("- **Blood Pressure**: Manage blood pressure through a low-sodium diet, exercise, and medication if needed.")
+    if 'cholesterol' in top_features.index:
+        st.write("- **Cholesterol**: Adopt a diet low in saturated fats and cholesterol; include more fiber.")
+    if 'weight' in top_features.index or 'height' in top_features.index:
+        st.write("- **Weight/BMI**: Achieve a healthy BMI through balanced nutrition and physical activity.")
+
+    # Motivational quotes
     st.markdown(
         """
         <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">

@@ -73,7 +73,22 @@ if submitted:
     prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
     risk_percentage = round(prediction * 100, 1)
 
-    # Results Section
+    # Gauge chart visualization
+    gauge_fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=risk_percentage,
+        gauge={
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "orange"},
+            'steps': [
+                {'range': [0, 50], 'color': "lightgreen"},
+                {'range': [50, 75], 'color': "yellow"},
+                {'range': [75, 100], 'color': "red"}
+            ],
+        },
+        title={'text': "Risk Percentage"}
+    ))
+     # Results Section
     st.subheader("Prediction Results")
     # Display metrics in boxes with relevant size
     col1, col2 = st.columns([1, 1])
@@ -107,22 +122,6 @@ if submitted:
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
-
-    # Gauge chart visualization
-    gauge_fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=risk_percentage,
-        gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': "orange"},
-            'steps': [
-                {'range': [0, 50], 'color': "lightgreen"},
-                {'range': [50, 75], 'color': "yellow"},
-                {'range': [75, 100], 'color': "red"}
-            ],
-        },
-        title={'text': "Risk Percentage"}
-    ))
     st.plotly_chart(gauge_fig)
 
     # Display feature importance

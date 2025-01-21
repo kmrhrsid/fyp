@@ -97,7 +97,7 @@ if submitted:
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
     fig, ax = plt.subplots()
-    feature_importance_series.plot(kind='bar', ax=ax, color='#FBEAEB')
+    feature_importance_series.plot(kind='bar', ax=ax, color='#7A2048 ')
     ax.set_title("Feature Importance")
     ax.set_ylabel("Importance Score")
     st.pyplot(fig)

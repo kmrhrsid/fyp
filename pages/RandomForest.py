@@ -1,4 +1,3 @@
-# Load necessary libraries
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -7,6 +6,20 @@ import matplotlib.pyplot as plt
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
+
+# Define feature importance values (based on your data)
+feature_importances = {
+    'ap_hi': 0.236094,
+    'weight': 0.210486,
+    'height': 0.185892,
+    'age_years': 0.179032,
+    'ap_lo': 0.115439,
+    'cholesterol': 0.055300,
+    'gender': 0.017758
+}
+
+# Convert to a pandas Series for easier manipulation
+feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
 # App title and description
 st.markdown(
@@ -82,26 +95,29 @@ if submitted:
 
     # Display feature importance
     st.subheader("Risk Factor Insights")
-    feature_importances = pd.Series(model.feature_importances_, index=expected_features).sort_values(ascending=False)
-    top_features = feature_importances.head(5)
-
-    # Bar chart of feature importances
+    st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
     fig, ax = plt.subplots()
-    top_features.plot(kind='bar', ax=ax, color='skyblue')
-    ax.set_title("Top Contributing Factors")
-    ax.set_ylabel("Feature Importance")
+    feature_importance_series.plot(kind='bar', ax=ax, color='skyblue')
+    ax.set_title("Feature Importance")
+    ax.set_ylabel("Importance Score")
     st.pyplot(fig)
 
-    # Provide tips for reducing risk
+    # Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
-    if 'age_years' in top_features.index:
-        st.write("- **Age**: Maintain regular health checkups and a heart-healthy lifestyle as you age.")
-    if 'ap_hi' in top_features.index or 'ap_lo' in top_features.index:
-        st.write("- **Blood Pressure**: Manage blood pressure through a low-sodium diet, exercise, and medication if needed.")
-    if 'cholesterol' in top_features.index:
-        st.write("- **Cholesterol**: Adopt a diet low in saturated fats and cholesterol; include more fiber.")
-    if 'weight' in top_features.index or 'height' in top_features.index:
-        st.write("- **Weight/BMI**: Achieve a healthy BMI through balanced nutrition and physical activity.")
+    if 'ap_hi' in feature_importance_series.index:
+        st.write("- **Systolic Blood Pressure (ap_hi)**: Regular exercise, a low-sodium diet, and stress management can help.")
+    if 'weight' in feature_importance_series.index:
+        st.write("- **Weight**: Maintain a healthy weight through a balanced diet and regular physical activity.")
+    if 'height' in feature_importance_series.index:
+        st.write("- **Height (BMI)**: Focus on achieving a healthy BMI through diet and exercise.")
+    if 'age_years' in feature_importance_series.index:
+        st.write("- **Age**: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
+    if 'ap_lo' in feature_importance_series.index:
+        st.write("- **Diastolic Blood Pressure (ap_lo)**: Monitor and manage through diet, exercise, and medication if needed.")
+    if 'cholesterol' in feature_importance_series.index:
+        st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
+    if 'gender' in feature_importance_series.index:
+        st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
 
     # Motivational quotes
     st.markdown(

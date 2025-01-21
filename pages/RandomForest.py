@@ -1,34 +1,28 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
 import joblib
-import matplotlib.pyplot as plt
+import os
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 
-# Define feature importance values (based on your data)
-feature_importances = {
-    'ap_hi': 0.236094,
-    'weight': 0.210486,
-    'height': 0.185892,
-    'age_years': 0.179032,
-    'ap_lo': 0.115439,
-    'cholesterol': 0.055300,
-    'gender': 0.017758
-}
+# File to save user health data
+DATA_FILE = "user_health_data.csv"
 
-# Convert to a pandas Series for easier manipulation
-feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
+# Initialize health data file if it doesn't exist
+if not os.path.exists(DATA_FILE):
+    pd.DataFrame(columns=['date', 'age_years', 'gender', 'height', 'weight', 'ap_lo', 'ap_hi', 'cholesterol', 'risk_percentage', 'bmi']).to_csv(DATA_FILE, index=False)
 
 # App title and description
 st.markdown(
     """
     <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-    Cardiovascular Risk Prediction
+    Cardiovascular Risk Prediction & Health Tracking
     </h1>
     <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-    <i>"The greatest wealth is health"</i>
+    <i>"Your health journey starts here."</i>
     </p>
     """,
     unsafe_allow_html=True
@@ -36,7 +30,7 @@ st.markdown(
 
 # User input form
 with st.form("user_input_form"):
-    st.subheader("Hi Dear, Enter Your Details")
+    st.subheader("Enter Your Health Metrics")
     age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
     gender = st.selectbox("Gender", ["Female", "Male"])
     height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -73,8 +67,25 @@ if submitted:
     prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
     risk_percentage = round(prediction * 100, 1)
 
+    # Save health metrics to CSV
+    user_data = pd.DataFrame({
+        'date': [pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")],
+        'age_years': [age],
+        'gender': [gender],
+        'height': [height],
+        'weight': [weight],
+        'ap_lo': [ap_lo],
+        'ap_hi': [ap_hi],
+        'cholesterol': [cholesterol],
+        'risk_percentage': [risk_percentage],
+        'bmi': [bmi],
+    })
+    user_data.to_csv(DATA_FILE, mode='a', header=False, index=False)
+
     # Results Section
     st.subheader("Prediction Results")
+    st.write(f"Your cardiovascular risk is estimated to be **{risk_percentage}%**.")
+    st.write(f"Your BMI is **{bmi}**.")
 
     # Gauge chart visualization
     gauge_fig = go.Figure(go.Indicator(
@@ -93,41 +104,30 @@ if submitted:
     ))
     st.plotly_chart(gauge_fig)
 
-    # Display feature importance
-    st.subheader("Risk Factor Insights")
-    st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
-    fig, ax = plt.subplots()
-    feature_importance_series.plot(kind='bar', ax=ax, color='skyblue')
-    ax.set_title("Feature Importance")
-    ax.set_ylabel("Importance Score")
-    st.pyplot(fig)
+# Health Tracking Dashboard
+st.subheader("Your Health Metrics Over Time")
 
-    # Provide tips based on feature importance
-    st.markdown("### Tips for Reducing Cardiovascular Risk:")
-    if 'ap_hi' in feature_importance_series.index:
-        st.write("- **Systolic Blood Pressure (ap_hi)**: Regular exercise, a low-sodium diet, and stress management can help.")
-    if 'weight' in feature_importance_series.index:
-        st.write("- **Weight**: Maintain a healthy weight through a balanced diet and regular physical activity.")
-    if 'height' in feature_importance_series.index:
-        st.write("- **Height (BMI)**: Focus on achieving a healthy BMI through diet and exercise.")
-    if 'age_years' in feature_importance_series.index:
-        st.write("- **Age**: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
-    if 'ap_lo' in feature_importance_series.index:
-        st.write("- **Diastolic Blood Pressure (ap_lo)**: Monitor and manage through diet, exercise, and medication if needed.")
-    if 'cholesterol' in feature_importance_series.index:
-        st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
-    if 'gender' in feature_importance_series.index:
-        st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
+if os.path.exists(DATA_FILE):
+    health_data = pd.read_csv(DATA_FILE)
 
-    # Motivational quotes
-    st.markdown(
-        """
-        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
-        <i>من جدّ وجد</i>
-        </p>
-        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
-        <i>"Whoever works really hard, will succeed"</i>
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
+    if not health_data.empty:
+        # Line charts for tracking
+        metric = st.selectbox("Select a metric to track:", ['risk_percentage', 'bmi', 'ap_lo', 'ap_hi', 'weight'])
+
+        fig = px.line(
+            health_data,
+            x='date',
+            y=metric,
+            title=f'Trend of {metric.replace("_", " ").title()} Over Time',
+            labels={'date': 'Date', metric: metric.replace("_", " ").title()},
+            markers=True
+        )
+        st.plotly_chart(fig)
+
+        # Display raw data
+        with st.expander("View Raw Data"):
+            st.dataframe(health_data)
+    else:
+        st.write("No health data found. Submit your health metrics to start tracking!")
+else:
+    st.write("No health data file found. Submit your health metrics to start tracking!")

@@ -5,7 +5,7 @@ import joblib
 import matplotlib.pyplot as plt
 
 # Load the trained model
-model = joblib.load('random_forest_model.pkl')  # Replace with your actual model file path
+model = joblib.load('random_forest_model (1).pkl')
 
 # Define feature importance values (based on your data)
 feature_importances = {
@@ -25,7 +25,7 @@ feature_importance_series = pd.Series(feature_importances).sort_values(ascending
 st.markdown(
     """
     <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-    Cardiovascular Risk Prediction 🫀
+    Cardiovascular Risk Prediction🫀
     </h1>
     <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
     <i>"The greatest wealth is health"</i>
@@ -77,42 +77,52 @@ if submitted:
     gauge_fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=risk_percentage,
-        title={'text': "Cardiovascular Risk (%)"},
         gauge={
-            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
-            'bar': {'color': "green" if risk_percentage <= 50 else "orange" if risk_percentage <= 75 else "red"},
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "orange"},
             'steps': [
                 {'range': [0, 50], 'color': "lightgreen"},
                 {'range': [50, 75], 'color': "yellow"},
                 {'range': [75, 100], 'color': "red"}
             ],
-            'threshold': {
-                'line': {'color': "black", 'width': 4},
-                'thickness': 0.75,
-                'value': risk_percentage
-            }
-        }
+        },
+        title={'text': "Risk Percentage"}
     ))
-
-    # Results Section
+     # Results Section
     st.subheader("Prediction Results")
-    st.plotly_chart(gauge_fig, use_container_width=True)
-
-    # Display BMI result
-    st.subheader("Your BMI Result")
-    thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-    st.markdown(
-        f"""
-        <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-        <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
-        <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
-        <p style="font-size: 20px; color: {"green" if 18.5 <= bmi <= 24.9 else "red"};">
-        {"Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy"}</p>
-        <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # Display metrics in boxes with relevant size
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        # Cardiovascular Risk with thumbs up or down
+        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
+        st.markdown(
+            """
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 40px;">{}</p>
+            </div>
+            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
+            unsafe_allow_html=True
+        )
+    
+    with col2:
+        # BMI with thumbs up for healthy
+        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+        st.markdown(
+            """
+            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+            <p style="font-size: 20px; color: {};">{}</p>
+            <p style="font-size: 40px;">{}</p>
+            </div>
+            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+            unsafe_allow_html=True
+        )
+    st.plotly_chart(gauge_fig)
 
     # Display feature importance
     st.subheader("Risk Factor Insights")
@@ -137,7 +147,8 @@ if submitted:
         st.write("- **Diastolic Blood Pressure (ap_lo)**: Monitor and manage through diet, exercise, and medication if needed.")
     if 'cholesterol' in feature_importance_series.index:
         st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
-
+    if 'gender' in feature_importance_series.index:
+        st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
 
     # Motivational quotes
     st.markdown(

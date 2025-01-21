@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import joblib
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -88,7 +89,11 @@ if submitted:
         },
         title={'text': "Risk Percentage"}
     ))
-     # Results Section
+
+    # Display the gauge chart above the results
+    st.plotly_chart(gauge_fig)
+
+    # Results Section
     st.subheader("Prediction Results")
     # Display metrics in boxes with relevant size
     col1, col2 = st.columns([1, 1])
@@ -122,18 +127,36 @@ if submitted:
             """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
             unsafe_allow_html=True
         )
-    st.plotly_chart(gauge_fig)
 
-    # Display feature importance with gradient colors
+    # Display feature importance with gradient colors and curved bars
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
+
     # Gradient colors for bars
     colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e'][:len(feature_importance_series)]
-    
-    fig, ax = plt.subplots()
-    feature_importance_series.plot(kind='bar', ax=ax, color=colors)
-    ax.set_title("Feature Importance")
-    ax.set_ylabel("Importance Score")
+
+    # Create a curved barplot with Seaborn
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.barplot(
+        x=feature_importance_series.values, 
+        y=feature_importance_series.index, 
+        palette=colors, 
+        ax=ax, 
+        edgecolor="black"
+    )
+
+    # Make bars slightly rounded
+    for patch in ax.patches:
+        patch.set_linewidth(1.5)
+        patch.set_edgecolor("black")
+        patch.set_capstyle("round")
+
+    # Chart aesthetics
+    ax.set_title("Feature Importance", fontsize=16, weight="bold")
+    ax.set_xlabel("Importance Score", fontsize=12)
+    ax.set_ylabel("Features", fontsize=12)
+    sns.despine(left=True, bottom=True)
+
     st.pyplot(fig)
 
     # Provide tips based on feature importance

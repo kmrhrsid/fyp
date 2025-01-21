@@ -37,42 +37,13 @@ st.markdown(
 # User input form
 with st.form("user_input_form"):
     st.subheader("Hi Dear, Enter Your Details")
-    
-    age = st.slider(
-        'Age (years)', 
-        min_value=20, max_value=80, value=50,
-        help="Select your current age in years."
-    )
-    gender = st.selectbox(
-        "Gender", 
-        ["Female", "Male"],
-        help="Choose your gender. This factor is considered in the model."
-    )
-    height = st.number_input(
-        "Height (cm)", 
-        min_value=100, max_value=250,
-        help="Enter your height in centimeters (e.g., 170)."
-    )
-    weight = st.number_input(
-        "Weight (kg)", 
-        min_value=30, max_value=200,
-        help="Enter your weight in kilograms (e.g., 70)."
-    )
-    ap_lo = st.number_input(
-        "Low Blood Pressure (mmHg)", 
-        min_value=0,
-        help="Enter your diastolic blood pressure (lower value in blood pressure readings)."
-    )
-    ap_hi = st.number_input(
-        "High Blood Pressure (mmHg)", 
-        min_value=0,
-        help="Enter your systolic blood pressure (higher value in blood pressure readings)."
-    )
-    cholesterol = st.selectbox(
-        "Cholesterol level", 
-        ["Normal", "Above Normal", "High"],
-        help="Select your cholesterol level based on recent lab results."
-    )
+    age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
+    gender = st.selectbox("Gender", ["Female", "Male"])
+    height = st.number_input("Height (cm)", min_value=100, max_value=250)
+    weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
+    ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
+    ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
+    cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
     
     # Submit button
     submitted = st.form_submit_button("Submit")

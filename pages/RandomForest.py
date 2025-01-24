@@ -22,6 +22,37 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
+def set_background():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url('https://raw.githubusercontent.com/user/repository/branch/images.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+def homepage():
+    set_background()  # Set the background image
+    st.markdown(
+        """
+        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+        Cardiovascular Risk Prediction🫀
+        </h1>
+        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+        <i>"The greatest wealth is health"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 # Home Page
 def homepage():
     st.markdown(

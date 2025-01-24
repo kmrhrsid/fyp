@@ -173,7 +173,6 @@ if submitted:
         st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
-
 # Motivational quotes
     st.markdown(
         """
@@ -185,6 +184,6 @@ if submitted:
         </p>
         """,
         unsafe_allow_html=True
-    )
+    )
 
 

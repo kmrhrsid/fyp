@@ -167,11 +167,12 @@ def insights_page():
         palette=colors,
         ax=ax
     )
-    ax.set_title("Feature Importance", fontsize=16, weight='bold', color='white')
-    ax.set_xlabel("Importance Score", fontsize=12, weight='bold', color='white')
-    ax.set_ylabel("Features", fontsize=12, weight='bold', color='white')
-    ax.tick_params(axis='both', which='major', labelcolor='white')
-    ax.tick_params(axis='both', which='minor', labelcolor='white')
+    ax.set_title("Feature Importance", fontsize=16, weight='bold')
+    ax.set_xlabel("Importance Score", fontsize=12, weight='bold')
+    ax.set_ylabel("Features", fontsize=12, weight='bold')
+    for bar in ax.patches:
+        bar.set_linewidth(3)  # Add linewidth to the bars
+        bar.set_edgecolor('black')  # Add edge color to the bars
     st.pyplot(fig)
 
     st.markdown(

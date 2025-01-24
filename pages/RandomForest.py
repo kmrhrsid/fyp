@@ -151,53 +151,41 @@ elif app_mode == "Prediction":
         st.plotly_chart(gauge_fig)
 
 elif app_mode == "Key Insights":
-      # Display feature importance with gradient colors and curved bars
+    # Display feature importance with gradient colors
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
-    # Gradient colors for bars
-    colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e']
+    # Highlight the most important feature with a bold bar
+    most_important_feature = feature_importance_series.idxmax()
+    colors = [
+        'red' if feature == most_important_feature else '#1f77b4'
+        for feature in feature_importance_series.index
+    ]
 
-    # Create curved bar chart using Seaborn
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.barplot(
-        x=feature_importance_series.values,
-        y=feature_importance_series.index,
-        palette=colors,
-        ax=ax,
-        linewidth=2,
-        edgecolor="black"
-    )
-
-    # Set titles and labels
-    ax.set_title("Feature Importance", fontsize=16, weight='bold')
-    ax.set_xlabel("Importance Score", fontsize=12)
-    ax.set_ylabel("Features", fontsize=12)
-
-    # Format the bars with rounded edges
-    for bar in ax.patches:
-        bar.set_linewidth(2)
-        bar.set_edgecolor("black")
-        bar.set_capstyle('round')
-
+    # Plot the feature importance with highlighted bar
+    fig, ax = plt.subplots()
+    feature_importance_series.plot(kind='bar', ax=ax, color=colors, edgecolor='black')
+    ax.set_title("Feature Importance", fontsize=16, fontweight='bold')
+    ax.set_ylabel("Importance Score", fontsize=12)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right', fontsize=10)
     st.pyplot(fig)
 
     # Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
-        st.write("- **Systolic Blood Pressure (ap_hi)**: Regular exercise, a low-sodium diet, and stress management can help.")
+        st.write("- *Systolic Blood Pressure (ap_hi)*: Regular exercise, a low-sodium diet, and stress management can help.")
     if 'weight' in feature_importance_series.index:
-        st.write("- **Weight**: Maintain a healthy weight through a balanced diet and regular physical activity.")
+        st.write("- *Weight*: Maintain a healthy weight through a balanced diet and regular physical activity.")
     if 'height' in feature_importance_series.index:
-        st.write("- **Height (BMI)**: Focus on achieving a healthy BMI through diet and exercise.")
+        st.write("- *Height (BMI)*: Focus on achieving a healthy BMI through diet and exercise.")
     if 'age_years' in feature_importance_series.index:
-        st.write("- **Age**: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
+        st.write("- *Age*: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
     if 'ap_lo' in feature_importance_series.index:
-        st.write("- **Diastolic Blood Pressure (ap_lo)**: Monitor and manage through diet, exercise, and medication if needed.")
+        st.write("- *Diastolic Blood Pressure (ap_lo)*: Monitor and manage through diet, exercise, and medication if needed.")
     if 'cholesterol' in feature_importance_series.index:
-        st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
+        st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
-        st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
+        st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
 
     # Motivational quotes
     st.markdown(
@@ -211,3 +199,4 @@ elif app_mode == "Key Insights":
         """,
         unsafe_allow_html=True
     )
+

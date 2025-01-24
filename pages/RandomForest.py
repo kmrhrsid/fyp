@@ -46,7 +46,7 @@ feature_importance_series = pd.Series(feature_importances).sort_values(ascending
 def homepage():
     st.markdown(
         """
-        <h1 style="font-family: 'Arial', cursive; color:#eca714 ; font-size: 70px; text-align: center;">
+        <h1 style="font-family: 'Arial', cursive; color:#1fade6 ; font-size: 70px; text-align: center;">
         Cardiovascular     Risk Prediction
         </h1>
         <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 40px; text-align: center;">

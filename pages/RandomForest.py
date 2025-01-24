@@ -60,7 +60,7 @@ def prediction_page():
     set_background("hp44.jpeg")  # Updated background image
     st.markdown(
         """
-        <h2 style="color: white;">Enter Your Details for Prediction</h2>
+        <h2 style="color: black;">Enter Your Details for Prediction</h2>
         """, unsafe_allow_html=True
     )
     with st.form("user_input_form"):
@@ -117,7 +117,7 @@ def prediction_page():
 
         with col1:
             # Cardiovascular Risk with thumbs up or down
-            thumbs_icon_risk = "❤" if risk_percentage <= 50 else "👎"
+            thumbs_icon_risk = "ـــــــــــــــــﮩ٨ـ❤️️" if risk_percentage <= 50 else "👎"
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -132,7 +132,7 @@ def prediction_page():
 
         with col2:
             # BMI with thumbs up for healthy
-            thumbs_icon_bmi = "❤" if 18.5 <= bmi <= 24.9 else "👎"
+            thumbs_icon_bmi = "ـــــــــــــــــﮩ٨ـ❤️️" if 18.5 <= bmi <= 24.9 else "👎"
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
@@ -153,8 +153,8 @@ def insights_page():
     set_background("hp44.jpeg")  # Updated background image
     st.markdown(
         """
-        <h2 style="color: white;">Risk Factor Insights</h2>
-        <p style="color: white;">Below is a feature importance chart to help you understand the most influential factors in predicting cardiovascular risk:</p>
+        <h2 style="color: black;">Risk Factor Insights</h2>
+        <p style="color: black;">Below is a feature importance chart to help you understand the most influential factors in predicting cardiovascular risk:</p>
         """,
         unsafe_allow_html=True
     )
@@ -177,8 +177,8 @@ def insights_page():
 
     st.markdown(
         """
-        <h3 style="color: white;">Tips for Reducing Cardiovascular Risk:</h3>
-        <ul style="color: white;">
+        <h3 style="color: black;">Tips for Reducing Cardiovascular Risk:</h3>
+        <ul style="color: black;">
             <li>Maintain healthy blood pressure levels with regular exercise and a low-sodium diet.</li>
             <li>Manage your weight through balanced nutrition and physical activity.</li>
             <li>Monitor your cholesterol and consult a doctor if levels are high.</li>

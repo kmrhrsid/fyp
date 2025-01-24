@@ -47,17 +47,17 @@ def homepage():
     st.markdown(
         """
         <h1 style="font-family: 'Arial', cursive; color:#eca714 ; font-size: 70px; text-align: center;">
-        <strong>Cardiovascular Risk Prediction</strong>
+        <s>Cardiovascular</s> Risk Prediction
         </h1>
         <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 40px; text-align: center;">
         <i>"The greatest wealth is health"</i>
-        </p>
-        <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
+         <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.
         </p>
         """,
         unsafe_allow_html=True
     )
+
 
     
 

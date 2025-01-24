@@ -42,10 +42,10 @@ def homepage():
     set_background("hp3 (1).jpg")
     st.markdown(
         """
-        <h1 style="font-family: 'Arial', cursive; color:#eca714 ; weight='bold'; font-size: 70px; text-align: center;">
+        <h1 style="font-family: 'Arial', cursive; color:#eca714 ; font-size: 70px; text-align: center;">
         Cardiovascular Risk Prediction
         </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color:white ; weight='bold'; font-size: 40px; text-align: center;">
+        <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 40px; text-align: center;">
         <i>"The greatest wealth is health"</i>
         </p>
         <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
@@ -131,18 +131,19 @@ def insights_page():
         palette=colors,
         ax=ax
     )
-    ax.set_title("Feature Importance", fontsize=16, weight='bold')
-    ax.set_xlabel("Importance Score", fontsize=12, weight='bold')
-    ax.set_ylabel("Features", fontsize=12, weight='bold')
+    ax.set_title("Feature Importance", fontsize=16, weight='bold', color="white")
+    ax.set_xlabel("Importance Score", fontsize=12, weight='bold', color="white")
+    ax.set_ylabel("Features", fontsize=12, weight='bold', color="white")
+    ax.tick_params(colors='white')  # Ensures tick labels are visible on a dark background
     st.pyplot(fig)
 
     st.markdown(
         """
-        <h3 style="color: white;">Tips for Reducing Cardiovascular Risk:</h3>
-        <ul style="color: white;">
-            <li>Maintain healthy blood pressure levels with regular exercise and a low-sodium diet.</li>
-            <li>Manage your weight through balanced nutrition and physical activity.</li>
-            <li>Monitor your cholesterol and consult a doctor if levels are high.</li>
+        <h3 style="color: white; font-weight: bold;">Tips for Reducing Cardiovascular Risk:</h3>
+        <ul style="color: white; font-size: 14px;">
+            <li><b>Maintain healthy blood pressure:</b> Regular exercise and a low-sodium diet can help.</li>
+            <li><b>Control weight:</b> Balanced nutrition and physical activity are essential.</li>
+            <li><b>Monitor cholesterol:</b> Regular checkups and medical advice are crucial for high levels.</li>
         </ul>
         """, unsafe_allow_html=True
     )

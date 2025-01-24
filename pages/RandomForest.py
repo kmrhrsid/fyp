@@ -22,41 +22,27 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
-# App title and description
-st.markdown(
-    """
-    <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-    Cardiovascular Risk Prediction🫀
-    </h1>
-    <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-    <i>"The greatest wealth is health"</i>
-    </p>
-    """,
-    unsafe_allow_html=True
-)
+# Home Page
+def homepage():
+    st.markdown(
+        """
+        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+        Cardiovascular Risk Prediction🫀
+        </h1>
+        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+        <i>"The greatest wealth is health"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+    st.write("Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.")
 
-# Streamlit Sidebar for navigation between pages
-page = st.sidebar.radio("Select a Page", ("Home", "Prediction", "Risk Insights"))
-
-# --- Page 1: Home ---
-if page == "Home":
-    st.markdown("### Welcome to the Cardiovascular Risk Prediction app!")
-    st.write("""
-        This app helps to predict the cardiovascular risk based on various health parameters such as age, 
-        blood pressure, cholesterol level, and more. You can enter your health information and receive 
-        an estimate of your risk.
-    """)
-    st.markdown("### How it Works:")
-    st.write("""
-        1. **Input**: Enter details like age, height, weight, etc.
-        2. **Prediction**: The model predicts your risk of cardiovascular disease based on your inputs.
-        3. **Risk Insights**: Learn about the importance of different factors and tips to reduce your risk.
-    """)
-
-# --- Page 2: Prediction ---
-if page == "Prediction":
+# Prediction Page
+def prediction_page():
+    st.subheader("Hi Dear, Enter Your Details")
+    
+    # User input form
     with st.form("user_input_form"):
-        st.subheader("Enter Your Health Information")
         age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
         gender = st.selectbox("Gender", ["Female", "Male"])
         height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -64,7 +50,7 @@ if page == "Prediction":
         ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
         ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
         cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
-
+        
         # Submit button
         submitted = st.form_submit_button("Submit")
 
@@ -92,14 +78,6 @@ if page == "Prediction":
         # Prediction
         prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
         risk_percentage = round(prediction * 100, 1)
-        st.session_state.risk_percentage = risk_percentage
-        st.session_state.bmi = bmi
-        st.session_state.age = age
-
-        # Displaying the results
-        st.success("Prediction successful!")
-        st.markdown(f"### Your Cardiovascular Risk: {risk_percentage}%")
-        st.markdown(f"### Your BMI: {bmi}")
 
         # Gauge chart visualization
         gauge_fig = go.Figure(go.Indicator(
@@ -116,10 +94,47 @@ if page == "Prediction":
             },
             title={'text': "Risk Percentage"}
         ))
+
+        # Results Section
+        st.subheader("Prediction Results")
+        # Display metrics in boxes with relevant size
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            # Cardiovascular Risk with thumbs up or down
+            thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
+            st.markdown(
+                f"""
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{risk_percentage}%</p>
+                <p style="font-size: 20px; color: {'red' if risk_percentage > 50 else 'green'};">{'High' if risk_percentage > 50 else 'Low'}</p>
+                <p style="font-size: 40px;">{thumbs_icon_risk}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with col2:
+            # BMI with thumbs up for healthy
+            thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+            st.markdown(
+                f"""
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
+                <p style="font-size: 20px; color: {'green' if 18.5 <= bmi <= 24.9 else 'red'};">{'Normal' if 18.5 <= bmi <= 24.9 else 'Unhealthy'}</p>
+                <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # Plot the gauge chart for risk percentage
         st.plotly_chart(gauge_fig)
 
-# --- Page 3: Risk Insights ---
-if page == "Risk Insights":
+# Insights Page
+def insights_page():
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
@@ -150,7 +165,6 @@ if page == "Risk Insights":
 
     st.pyplot(fig)
 
-    # Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
         st.write("- *Systolic Blood Pressure (ap_hi)*: Regular exercise, a low-sodium diet, and stress management can help.")
@@ -167,8 +181,7 @@ if page == "Risk Insights":
     if 'gender' in feature_importance_series.index:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
 
-
-# Motivational quotes
+    # Motivational quotes
     st.markdown(
         """
         <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
@@ -180,3 +193,17 @@ if page == "Risk Insights":
         """,
         unsafe_allow_html=True
     )
+
+# Main Navigation
+def main():
+    page = st.selectbox("Select Page", ["Home", "Prediction", "Insights"])
+    
+    if page == "Home":
+        homepage()
+    elif page == "Prediction":
+        prediction_page()
+    elif page == "Insights":
+        insights_page()
+
+if __name__ == "__main__":
+    main()

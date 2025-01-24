@@ -12,7 +12,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #f0f0f0;  # light grey
+        background-color: #F2D2BD;  # Bisque
     }
     </style>
     """, unsafe_allow_html=True)

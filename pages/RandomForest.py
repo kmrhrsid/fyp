@@ -121,7 +121,7 @@ def prediction_page():
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+                <h3 style="font-size: 18px; color: white;">Cardiovascular Risk (%)</h3>
                 <p style="font-size: 24px; color: DarkSlateGray;">{risk_percentage}%</p>
                 <p style="font-size: 20px; color: {'red' if risk_percentage > 50 else 'green'};">{'High' if risk_percentage > 50 else 'Low'}</p>
                 <p style="font-size: 40px;">{thumbs_icon_risk}</p>
@@ -136,7 +136,7 @@ def prediction_page():
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+                <h3 style="font-size: 18px; color: white;">BMI (Body Mass Index)</h3>
                 <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
                 <p style="font-size: 20px; color: {'green' if 18.5 <= bmi <= 24.9 else 'red'};">{'Normal' if 18.5 <= bmi <= 24.9 else 'Unhealthy'}</p>
                 <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
@@ -167,9 +167,11 @@ def insights_page():
         palette=colors,
         ax=ax
     )
-    ax.set_title("Feature Importance", fontsize=16, weight='bold')
-    ax.set_xlabel("Importance Score", fontsize=12, weight='bold')
-    ax.set_ylabel("Features", fontsize=12, weight='bold')
+    ax.set_title("Feature Importance", fontsize=16, weight='bold', color='white')
+    ax.set_xlabel("Importance Score", fontsize=12, weight='bold', color='white')
+    ax.set_ylabel("Features", fontsize=12, weight='bold', color='white')
+    ax.tick_params(axis='both', which='major', labelcolor='white')
+    ax.tick_params(axis='both', which='minor', labelcolor='white')
     st.pyplot(fig)
 
     st.markdown(

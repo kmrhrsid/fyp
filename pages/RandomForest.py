@@ -43,30 +43,14 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
-
-def homepage():
-    set_background()  # Set the background image
-    st.markdown(
-        """
-        <h1 style="font-family: 'Arial', cursive; color:white; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
-        </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color:black ; font-size: 20px; text-align: center;">
-        <i>"The greatest wealth is health"</i>
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
-
-
 # Home Page
 def homepage():
     st.markdown(
         """
-        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+        <h1 style="font-family: 'Arial', cursive; color:white ; font-size: 65px; text-align: center;">
         Cardiovascular Risk Prediction🫀
         </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+        <p style="font-family: 'CabinSketch Bold', cursive; color: black ; font-size: 20px; text-align: center;">
         <i>"The greatest wealth is health"</i>
          <p style="font-family: 'Arial', cursive; color: Black; font-size: 10px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.

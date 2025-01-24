@@ -106,7 +106,22 @@ def prediction_page():
                     {'range': [75, 100], 'color': "red"}
                 ],
             },
-            title={'text': "Risk Percentage"}
+            title={'text': "Risk Percentage"},
+            layout={
+                'shapes': [
+                    {
+                        'type': 'rect',
+                        'x0': 0,
+                        'x1': 1,
+                        'y0': 0,
+                        'y1': 1,
+                        'line': {
+                            'color': 'black',
+                            'width': 4
+                        }
+                    }
+                ]
+            }
         ))
 
         st.subheader("Prediction Results")
@@ -134,6 +149,9 @@ def insights_page():
     ax.set_title("Feature Importance", fontsize=16, weight='bold')
     ax.set_xlabel("Importance Score", fontsize=12, weight='bold')
     ax.set_ylabel("Features", fontsize=12, weight='bold')
+    for bar in ax.patches:
+        bar.set_linewidth(3)  # Add linewidth to the bars
+        bar.set_edgecolor('black')  # Add edge color to the bars
     st.pyplot(fig)
 
     st.markdown(

@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import base64
 
-# Set page configuration (must be the first Streamlit command)
-st.set_page_config(page_title="Cardiovascular Risk Prediction", page_icon="🫀")
 
 # Function to encode the image in Base64
 def add_background_image(image_path):

@@ -28,7 +28,6 @@ def add_background_image(image_path):
 # Add your background image here
 add_background_image("images.jpg")
 
-
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

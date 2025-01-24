@@ -3,28 +3,20 @@ import pandas as pd
 import plotly.graph_objects as go
 import joblib
 import matplotlib.pyplot as plt
-import seaborn as sns
-import base64
 
-
-# Function to encode the image in Base64
-def add_background_image(image_path):
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode()
-    background_style = f"""
+# Set the background image using CSS
+background_image_url = "https://img.freepik.com/free-vector/abstract-gradient-background_23-2149238572.jpg"  # Direct image URL
+st.markdown(
+    f"""
     <style>
-    [data-testid="stAppViewContainer"] {{
-        background-image: url("data:image/png;base64,{encoded_image}");
+    .reportview-container {{
+        background: url({background_image_url}) no-repeat center center fixed;
         background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
     }}
     </style>
-    """
-    st.markdown(background_style, unsafe_allow_html=True)
-
-# Add your background image here
-add_background_image("images.jpg")
+    """,
+    unsafe_allow_html=True
+)
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -44,43 +36,28 @@ feature_importances = {
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
 # App title and description
-st.set_page_config(page_title="Cardiovascular Risk Prediction", page_icon="🫀")
+st.markdown(
+    """
+    <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+    Cardiovascular Risk Prediction🫀
+    </h1>
+    <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+    <i>"The greatest wealth is health"</i>
+    </p>
+    """,
+    unsafe_allow_html=True
+)
 
-# Sidebar Navigation
-page = st.sidebar.radio("Select a Page", ["Home", "Predict", "Key Insights"])
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+app_mode = st.sidebar.radio("Choose a section", ["Home", "Prediction", "Key Insights"])
 
-if page == "Home":
-    # Home Page Content
-    st.markdown(
-        """
-        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
-        </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-        <i>"The greatest wealth is health"</i>
-        </p>
-        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 20px; text-align: center;">
-        This app helps you predict the likelihood of cardiovascular disease based on health metrics such as age, weight, blood pressure, cholesterol levels, and more. Enter your details to check your cardiovascular risk and understand the key factors influencing your health.
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
-    st.image("https://i.pinimg.com/originals/27/a1/2d/27a12d7efb1a509b27731c5b9e6a39a1.jpg", caption="Heart Health")
+if app_mode == "Home":
+    st.subheader("Welcome to the Cardiovascular Risk Prediction App!")
+    st.write("This app helps you predict your cardiovascular risk based on your health parameters.")
+    st.write("Enter your details in the 'Prediction' section to get a risk score.")
 
-elif page == "Predict":
-    # Prediction Page Content
-    st.markdown(
-        """
-        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
-        </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-        <i>"The greatest wealth is health"</i>
-        </p>
-        """,
-        unsafe_allow_html=True
-    )
-
+elif app_mode == "Prediction":
     # User input form
     with st.form("user_input_form"):
         st.subheader("Hi Dear, Enter Your Details")
@@ -100,20 +77,6 @@ elif page == "Predict":
         gender_encoded = 1 if gender == "Male" else 0
         cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
         bmi = round(weight / ((height / 100) ** 2), 1)
-
-        # Categorize BMI
-        if bmi < 18.5:
-            bmi_category = "Underweight"
-            bmi_color = "red"
-        elif 18.5 <= bmi <= 24.9:
-            bmi_category = "Normal"
-            bmi_color = "green"
-        elif 25 <= bmi <= 29.9:
-            bmi_category = "Overweight"
-            bmi_color = "yellow"
-        else:
-            bmi_category = "Obese"
-            bmi_color = "red"
 
         # Create input DataFrame
         input_data = pd.DataFrame({
@@ -150,9 +113,6 @@ elif page == "Predict":
             title={'text': "Risk Percentage"}
         ))
 
-        # Display the gauge chart above the results
-        st.plotly_chart(gauge_fig)
-
         # Results Section
         st.subheader("Prediction Results")
         # Display metrics in boxes with relevant size
@@ -174,50 +134,34 @@ elif page == "Predict":
             )
 
         with col2:
-            # BMI with thumbs up or down
-            thumbs_icon_bmi = "❤️" if bmi_category == "Normal" else "👎"
+            # BMI with thumbs up for healthy
+            thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
             st.markdown(
                 """
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px;">BMI Category</h3>
+                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
                 <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
                 <p style="font-size: 20px; color: {};">{}</p>
                 <p style="font-size: 40px;">{}</p>
                 </div>
-                """.format(bmi, bmi_color, bmi_category, thumbs_icon_bmi),
+                """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Normal" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
                 unsafe_allow_html=True
             )
 
-elif page == "Key Insights":
-    # Key Insights Page Content
-    st.subheader("Key Insights into Cardiovascular Risk Factors")
-    st.write("Understanding which factors play a significant role in predicting cardiovascular risk is essential for prevention. Below is a chart showing the importance of different features in predicting your cardiovascular health.")
+        st.plotly_chart(gauge_fig)
+
+elif app_mode == "Key Insights":
+    # Display feature importance with gradient colors
+    st.subheader("Risk Factor Insights")
+    st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
     # Gradient colors for bars
     colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e'][:len(feature_importance_series)]
 
-    # Create a curved barplot with Seaborn
-    fig, ax = plt.subplots(figsize=(8, 6))
-    sns.barplot(
-        x=feature_importance_series.values, 
-        y=feature_importance_series.index, 
-        palette=colors, 
-        ax=ax, 
-        edgecolor="black"
-    )
-
-    # Make bars slightly rounded
-    for patch in ax.patches:
-        patch.set_linewidth(1.5)
-        patch.set_edgecolor("black")
-        patch.set_capstyle("round")
-
-    # Chart aesthetics
-    ax.set_title("Feature Importance", fontsize=16, weight="bold")
-    ax.set_xlabel("Importance Score", fontsize=12)
-    ax.set_ylabel("Features", fontsize=12)
-    sns.despine(left=True, bottom=True)
-
+    fig, ax = plt.subplots()
+    feature_importance_series.plot(kind='bar', ax=ax, color=colors)
+    ax.set_title("Feature Importance")
+    ax.set_ylabel("Importance Score")
     st.pyplot(fig)
 
     # Provide tips based on feature importance
@@ -236,3 +180,16 @@ elif page == "Key Insights":
         st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
+
+    # Motivational quotes
+    st.markdown(
+        """
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
+        <i>"Whoever works really hard, will succeed"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )

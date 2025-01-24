@@ -7,12 +7,14 @@ import seaborn as sns
 
 import streamlit as st
 
-# Add background color
+# Add background image from a local file
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #F2D2BD;  # Bisque
+        background-image: url('images.jpg');  # Use your image file name
+        background-size: cover;
+        background-position: center;
     }
     </style>
     """, unsafe_allow_html=True)

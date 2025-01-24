@@ -50,7 +50,7 @@ def homepage():
         <h1 style="font-family: 'Arial', cursive; color: black ; font-size: 65px; text-align: center;">
         Cardiovascular Risk Prediction🫀
         </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: black ; font-size: 20px; text-align: center;">
+        <p style="font-family: 'CabinSketch Bold', cursive; color: red ; font-size: 20px; text-align: center;">
         <i>"The greatest wealth is health"</i>
          <p style="font-family: 'Arial', cursive; color: Black; font-size: 10px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.

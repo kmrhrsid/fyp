@@ -5,6 +5,22 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import streamlit as st
+
+# Add background color
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #f0f0f0;  # light grey
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+st.title('Your Streamlit App with Solid Background')
+st.write("Content goes here.")
+
+
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 
@@ -22,21 +38,6 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
-def set_background():
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url('https://raw.githubusercontent.com/user/repository/branch/images.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
 def homepage():
     set_background()  # Set the background image

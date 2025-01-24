@@ -15,7 +15,7 @@ def add_background_image(image_path):
     <style>
     [data-testid="stAppViewContainer"] {{
         background-image: url("data:image/png;base64,{encoded_image}");
-        background-size: 16:9;
+        background-size: 16:23;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}

@@ -185,6 +185,15 @@ def insights_page():
         </ul>
         """, unsafe_allow_html=True
     )
+     # Quote with a meaning 
+    st.markdown(
+        """
+        <p style="font-family: Georgia; color: Green ; font-size: 40px; text-align: center;">
+        <i>" Whoever works really hard, will succeed "</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Main Navigation
 def main():

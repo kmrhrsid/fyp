@@ -143,7 +143,7 @@ def prediction_page():
                 </div>
                 """,
                 unsafe_allow_html=True
-            )
+            ) 
 
         # Plot the gauge chart for risk percentage
         st.plotly_chart(gauge_fig)

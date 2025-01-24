@@ -1,8 +1,3 @@
-To incorporate the **Results Section** and **Insights Page** as requested, I've adjusted your code. It now includes the prediction results with styled boxes displaying **Cardiovascular Risk** and **BMI** metrics, as well as a more visually engaging **Feature Importance** chart in the **Insights Page**.
-
-Here is the updated code:
-
-```python
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go

@@ -35,8 +35,15 @@ def homepage():
         """,
         unsafe_allow_html=True
     )
-    st.write("Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of 
-                        cardiovascular disease and get insights based on your health data.")
+    # Center the welcome text using HTML
+    st.markdown(
+        """
+        <p style="font-family: 'Arial', cursive; color: Black; font-size: 20px; text-align: center;">
+        Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Prediction Page
 def prediction_page():

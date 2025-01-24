@@ -15,7 +15,7 @@ def add_background_image(image_path):
     <style>
     [data-testid="stAppViewContainer"] {{
         background-image: url("data:image/png;base64,{encoded_image}");
-        background-size: cover;
+        background-size: 16:9;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}
@@ -24,7 +24,7 @@ def add_background_image(image_path):
     st.markdown(background_style, unsafe_allow_html=True)
 
 # Add your background image here
-add_background_image("hp1.jpg") 
+add_background_image("hp2.jpg") 
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')

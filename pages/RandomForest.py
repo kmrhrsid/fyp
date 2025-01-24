@@ -215,3 +215,17 @@ elif page == "Key Insights":
         st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
+
+
+ # Motivational quotes
+    st.markdown(
+        """
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
+        <i>"Whoever works really hard, will succeed"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )

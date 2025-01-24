@@ -156,21 +156,33 @@ if submitted:
         bar.set_capstyle('round')
 
     st.pyplot(fig)
-    t.pyplot(fig)
 
     # Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
-        st.write("- **Systolic Blood Pressure (ap_hi): Regular exercise, a low-sodium diet, and stress management can help.")
+        st.write("- **Systolic Blood Pressure (ap_hi)**: Regular exercise, a low-sodium diet, and stress management can help.")
     if 'weight' in feature_importance_series.index:
-        st.write("- Weight: Maintain a healthy weight through a balanced diet and regular physical activity.")
+        st.write("- **Weight**: Maintain a healthy weight through a balanced diet and regular physical activity.")
     if 'height' in feature_importance_series.index:
-        st.write("- Height (BMI): Focus on achieving a healthy BMI through diet and exercise.")
+        st.write("- **Height (BMI)**: Focus on achieving a healthy BMI through diet and exercise.")
     if 'age_years' in feature_importance_series.index:
-        st.write("- Age: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
+        st.write("- **Age**: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
     if 'ap_lo' in feature_importance_series.index:
-        st.write("- Diastolic Blood Pressure (ap_lo): Monitor and manage through diet, exercise, and medication if needed.")
+        st.write("- **Diastolic Blood Pressure (ap_lo)**: Monitor and manage through diet, exercise, and medication if needed.")
     if 'cholesterol' in feature_importance_series.index:
-        st.write("- Cholesterol: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
+        st.write("- **Cholesterol**: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
-        st.write("- Gender: Risk differences may exist, but focus on modifiable factors for prevention.")
+        st.write("- **Gender**: Risk differences may exist, but focus on modifiable factors for prevention.")
+
+    # Motivational quotes
+    st.markdown(
+        """
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
+        <i>"Whoever works really hard, will succeed"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )

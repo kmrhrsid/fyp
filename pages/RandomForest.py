@@ -57,7 +57,7 @@ def homepage():
 
 # Prediction Page
 def prediction_page():
-    set_background("images.jpg")
+    set_background("hp44.jpg")
     st.markdown(
         """
         <h2 style="color: white;">Enter Your Details for Prediction</h2>
@@ -114,7 +114,7 @@ def prediction_page():
 
 # Insights Page
 def insights_page():
-    set_background("images.jpg")
+    set_background("hp44.jpg")
     st.markdown(
         """
         <h2 style="color: white;">Risk Factor Insights</h2>

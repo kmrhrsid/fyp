@@ -157,7 +157,7 @@ if submitted:
 
     st.pyplot(fig)
 
- # Provide tips based on feature importance
+# Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
         st.write("- *Systolic Blood Pressure (ap_hi)*: Regular exercise, a low-sodium diet, and stress management can help.")
@@ -173,7 +173,6 @@ if submitted:
         st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
-
 
 # Motivational quotes
     st.markdown(

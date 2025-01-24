@@ -94,6 +94,7 @@ def prediction_page():
         prediction = model.predict_proba(input_data)[0][1]
         risk_percentage = round(prediction * 100, 1)
 
+        # Gauge chart for risk percentage
         gauge_fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=risk_percentage,
@@ -106,25 +107,45 @@ def prediction_page():
                     {'range': [75, 100], 'color': "red"}
                 ],
             },
-            title={'text': "Risk Percentage"},
-            layout={
-                'shapes': [
-                    {
-                        'type': 'rect',
-                        'x0': 0,
-                        'x1': 1,
-                        'y0': 0,
-                        'y1': 1,
-                        'line': {
-                            'color': 'black',
-                            'width': 4
-                        }
-                    }
-                ]
-            }
+            title={'text': "Risk Percentage"}
         ))
 
         st.subheader("Prediction Results")
+        
+        # Results Section with styled boxes
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            # Cardiovascular Risk with thumbs up or down
+            thumbs_icon_risk = "❤" if risk_percentage <= 50 else "👎"
+            st.markdown(
+                f"""
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{risk_percentage}%</p>
+                <p style="font-size: 20px; color: {'red' if risk_percentage > 50 else 'green'};">{'High' if risk_percentage > 50 else 'Low'}</p>
+                <p style="font-size: 40px;">{thumbs_icon_risk}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with col2:
+            # BMI with thumbs up for healthy
+            thumbs_icon_bmi = "❤" if 18.5 <= bmi <= 24.9 else "👎"
+            st.markdown(
+                f"""
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
+                <p style="font-size: 20px; color: {'green' if 18.5 <= bmi <= 24.9 else 'red'};">{'Normal' if 18.5 <= bmi <= 24.9 else 'Unhealthy'}</p>
+                <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # Plot the gauge chart for risk percentage
         st.plotly_chart(gauge_fig)
 
 # Insights Page
@@ -149,9 +170,6 @@ def insights_page():
     ax.set_title("Feature Importance", fontsize=16, weight='bold')
     ax.set_xlabel("Importance Score", fontsize=12, weight='bold')
     ax.set_ylabel("Features", fontsize=12, weight='bold')
-    for bar in ax.patches:
-        bar.set_linewidth(3)  # Add linewidth to the bars
-        bar.set_edgecolor('black')  # Add edge color to the bars
     st.pyplot(fig)
 
     st.markdown(

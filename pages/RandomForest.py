@@ -194,9 +194,10 @@ def insights_page():
         unsafe_allow_html=True
     )
 
-# Main Navigation
+# Main Navigation in Sidebar
 def main():
-    page = st.selectbox("Select Page", ["Home", "Prediction", "Insights"])
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Select Page", ["Home", "Prediction", "Insights"])
     
     if page == "Home":
         homepage()

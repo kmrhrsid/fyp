@@ -36,12 +36,27 @@ st.markdown(
 )
 
 # Streamlit Sidebar for navigation between pages
-page = st.sidebar.radio("Select a Page", ("Input", "Prediction Results", "Risk Factor Insights"))
+page = st.sidebar.radio("Select a Page", ("Home", "Prediction", "Risk Insights"))
 
-# Page 1: User Input Form
-if page == "Input":
+# --- Page 1: Home ---
+if page == "Home":
+    st.markdown("### Welcome to the Cardiovascular Risk Prediction app!")
+    st.write("""
+        This app helps to predict the cardiovascular risk based on various health parameters such as age, 
+        blood pressure, cholesterol level, and more. You can enter your health information and receive 
+        an estimate of your risk.
+    """)
+    st.markdown("### How it Works:")
+    st.write("""
+        1. **Input**: Enter details like age, height, weight, etc.
+        2. **Prediction**: The model predicts your risk of cardiovascular disease based on your inputs.
+        3. **Risk Insights**: Learn about the importance of different factors and tips to reduce your risk.
+    """)
+
+# --- Page 2: Prediction ---
+if page == "Prediction":
     with st.form("user_input_form"):
-        st.subheader("Hi Dear, Enter Your Details")
+        st.subheader("Enter Your Health Information")
         age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
         gender = st.selectbox("Gender", ["Female", "Male"])
         height = st.number_input("Height (cm)", min_value=100, max_value=250)
@@ -74,23 +89,17 @@ if page == "Input":
         expected_features = model.feature_names_in_
         input_data = input_data[expected_features]
 
-        # Store data for prediction on the next page
-        st.session_state.input_data = input_data
-        st.session_state.bmi = bmi
-        st.session_state.age = age
-        st.session_state.risk_percentage = None
-
-        st.success("Data submitted! Proceed to see the prediction results.")
-
-# Page 2: Prediction Results
-if page == "Prediction Results":
-    if 'input_data' in st.session_state:
         # Prediction
-        input_data = st.session_state.input_data
         prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
         risk_percentage = round(prediction * 100, 1)
-        bmi = st.session_state.bmi
         st.session_state.risk_percentage = risk_percentage
+        st.session_state.bmi = bmi
+        st.session_state.age = age
+
+        # Displaying the results
+        st.success("Prediction successful!")
+        st.markdown(f"### Your Cardiovascular Risk: {risk_percentage}%")
+        st.markdown(f"### Your BMI: {bmi}")
 
         # Gauge chart visualization
         gauge_fig = go.Figure(go.Indicator(
@@ -107,46 +116,10 @@ if page == "Prediction Results":
             },
             title={'text': "Risk Percentage"}
         ))
-
-        # Results Section
-        st.subheader("Prediction Results")
-        col1, col2 = st.columns([1, 1])
-
-        with col1:
-            # Cardiovascular Risk with thumbs up or down
-            thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
-            st.markdown(
-                """
-                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
-                <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-                <p style="font-size: 20px; color: {};">{}</p>
-                <p style="font-size: 40px;">{}</p>
-                </div>
-                """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
-                unsafe_allow_html=True
-            )
-
-        with col2:
-            # BMI with thumbs up for healthy
-            thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-            st.markdown(
-                """
-                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
-                <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-                <p style="font-size: 20px; color: {};">{}</p>
-                <p style="font-size: 40px;">{}</p>
-                </div>
-                """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
-                unsafe_allow_html=True
-            )
         st.plotly_chart(gauge_fig)
-    else:
-        st.warning("Please submit your details on the Input page first.")
 
-# Page 3: Risk Factor Insights
-if page == "Risk Factor Insights":
+# --- Page 3: Risk Insights ---
+if page == "Risk Insights":
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
@@ -193,6 +166,7 @@ if page == "Risk Factor Insights":
         st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
+
 
 # Motivational quotes
     st.markdown(

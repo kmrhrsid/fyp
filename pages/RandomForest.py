@@ -12,7 +12,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url('images.jpg');  # Use your image file name
+        background-image: url('/images.jpg');  # Use your image file name
         background-size: cover;
         background-position: center;
     }

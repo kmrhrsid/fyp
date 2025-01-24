@@ -48,7 +48,7 @@ def homepage():
     st.markdown(
         """
         <h1 style="font-family: 'Arial', cursive; color:#DC143C ; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
+        Cardiovascular Risk Prediction
         </h1>
         <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 20px; text-align: center;">
         <i>"The greatest wealth is health"</i>

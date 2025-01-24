@@ -5,28 +5,6 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import streamlit as st
-
-import streamlit as st
-
-# Function to set the background image using a GitHub URL
-def add_background_image(image_url):
-    background_style = f"""
-    <style>
-    [data-testid="stAppViewContainer"] {{
-        background-image: url("{image_url}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    """
-    st.markdown(background_style, unsafe_allow_html=True)
-
-# Add the background image from the GitHub raw URL
-add_background_image("https://raw.githubusercontent.com/username/repository/branch/images.jpg")  # Replace with your GitHub image URL
-
-
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

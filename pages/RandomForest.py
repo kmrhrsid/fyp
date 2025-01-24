@@ -44,6 +44,21 @@ feature_importances = {
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
 
+def homepage():
+    set_background()  # Set the background image
+    st.markdown(
+        """
+        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
+        Cardiovascular Risk Prediction🫀
+        </h1>
+        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+        <i>"The greatest wealth is health"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 # Home Page
 def homepage():
     st.markdown(

@@ -38,7 +38,7 @@ def homepage():
     # Center the welcome text using HTML
     st.markdown(
         """
-        <p style="font-family: 'Arial', cursive; color: Black; font-size: 20px; text-align: center;">
+        <p style="font-family: 'Arial', cursive; color: Black; font-size: 10px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.
         </p>
         """,

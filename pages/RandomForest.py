@@ -35,98 +35,118 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# User input form
-with st.form("user_input_form"):
-    st.subheader("Hi Dear, Enter Your Details")
-    age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
-    gender = st.selectbox("Gender", ["Female", "Male"])
-    height = st.number_input("Height (cm)", min_value=100, max_value=250)
-    weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
-    ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
-    ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
-    cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
-    
-    # Submit button
-    submitted = st.form_submit_button("Submit")
+# Streamlit Sidebar for navigation between pages
+page = st.sidebar.radio("Select a Page", ("Input", "Prediction Results", "Risk Factor Insights"))
 
-if submitted:
-    # Preprocessing
-    gender_encoded = 1 if gender == "Male" else 0
-    cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
-    bmi = round(weight / ((height / 100) ** 2), 1)
+# Page 1: User Input Form
+if page == "Input":
+    with st.form("user_input_form"):
+        st.subheader("Hi Dear, Enter Your Details")
+        age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
+        gender = st.selectbox("Gender", ["Female", "Male"])
+        height = st.number_input("Height (cm)", min_value=100, max_value=250)
+        weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
+        ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
+        ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
+        cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
 
-    # Create input DataFrame
-    input_data = pd.DataFrame({
-        'age_years': [age],
-        'gender': [gender_encoded],
-        'height': [height],
-        'weight': [weight],
-        'ap_lo': [ap_lo],
-        'ap_hi': [ap_hi],
-        'cholesterol': [cholesterol_encoded],
-    })
+        # Submit button
+        submitted = st.form_submit_button("Submit")
 
-    # Align with model features
-    expected_features = model.feature_names_in_
-    input_data = input_data[expected_features]
+    if submitted:
+        # Preprocessing
+        gender_encoded = 1 if gender == "Male" else 0
+        cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
+        bmi = round(weight / ((height / 100) ** 2), 1)
 
-    # Prediction
-    prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
-    risk_percentage = round(prediction * 100, 1)
+        # Create input DataFrame
+        input_data = pd.DataFrame({
+            'age_years': [age],
+            'gender': [gender_encoded],
+            'height': [height],
+            'weight': [weight],
+            'ap_lo': [ap_lo],
+            'ap_hi': [ap_hi],
+            'cholesterol': [cholesterol_encoded],
+        })
 
-    # Gauge chart visualization
-    gauge_fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=risk_percentage,
-        gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': "orange"},
-            'steps': [
-                {'range': [0, 50], 'color': "lightgreen"},
-                {'range': [50, 75], 'color': "yellow"},
-                {'range': [75, 100], 'color': "red"}
-            ],
-        },
-        title={'text': "Risk Percentage"}
-    ))
+        # Align with model features
+        expected_features = model.feature_names_in_
+        input_data = input_data[expected_features]
 
-    # Results Section
-    st.subheader("Prediction Results")
-    # Display metrics in boxes with relevant size
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        # Cardiovascular Risk with thumbs up or down
-        thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
-        st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
-            </div>
-            """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
-            unsafe_allow_html=True
-        )
-    
-    with col2:
-        # BMI with thumbs up for healthy
-        thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
-        st.markdown(
-            """
-            <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-            <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
-            <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
-            <p style="font-size: 20px; color: {};">{}</p>
-            <p style="font-size: 40px;">{}</p>
-            </div>
-            """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
-            unsafe_allow_html=True
-        )
-    st.plotly_chart(gauge_fig)
+        # Store data for prediction on the next page
+        st.session_state.input_data = input_data
+        st.session_state.bmi = bmi
+        st.session_state.age = age
+        st.session_state.risk_percentage = None
 
-    # Display feature importance with gradient colors and bold bars
+        st.success("Data submitted! Proceed to see the prediction results.")
+
+# Page 2: Prediction Results
+if page == "Prediction Results":
+    if 'input_data' in st.session_state:
+        # Prediction
+        input_data = st.session_state.input_data
+        prediction = model.predict_proba(input_data)[0][1]  # Probability of cardiovascular risk
+        risk_percentage = round(prediction * 100, 1)
+        bmi = st.session_state.bmi
+        st.session_state.risk_percentage = risk_percentage
+
+        # Gauge chart visualization
+        gauge_fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=risk_percentage,
+            gauge={
+                'axis': {'range': [0, 100]},
+                'bar': {'color': "orange"},
+                'steps': [
+                    {'range': [0, 50], 'color': "lightgreen"},
+                    {'range': [50, 75], 'color': "yellow"},
+                    {'range': [75, 100], 'color': "red"}
+                ],
+            },
+            title={'text': "Risk Percentage"}
+        ))
+
+        # Results Section
+        st.subheader("Prediction Results")
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            # Cardiovascular Risk with thumbs up or down
+            thumbs_icon_risk = "❤️" if risk_percentage <= 50 else "👎"
+            st.markdown(
+                """
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">Cardiovascular Risk (%)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+                <p style="font-size: 20px; color: {};">{}</p>
+                <p style="font-size: 40px;">{}</p>
+                </div>
+                """.format(risk_percentage, "red" if risk_percentage > 50 else "green", "High" if risk_percentage > 50 else "Low", thumbs_icon_risk),
+                unsafe_allow_html=True
+            )
+
+        with col2:
+            # BMI with thumbs up for healthy
+            thumbs_icon_bmi = "❤️" if 18.5 <= bmi <= 24.9 else "👎"
+            st.markdown(
+                """
+                <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
+                <h3 style="font-size: 18px;">BMI (Body Mass Index)</h3>
+                <p style="font-size: 24px; color: DarkSlateGray;">{}</p>
+                <p style="font-size: 20px; color: {};">{}</p>
+                <p style="font-size: 40px;">{}</p>
+                </div>
+                """.format(bmi, "green" if 18.5 <= bmi <= 24.9 else "red", "Healthy" if 18.5 <= bmi <= 24.9 else "Unhealthy", thumbs_icon_bmi),
+                unsafe_allow_html=True
+            )
+        st.plotly_chart(gauge_fig)
+    else:
+        st.warning("Please submit your details on the Input page first.")
+
+# Page 3: Risk Factor Insights
+if page == "Risk Factor Insights":
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
@@ -157,7 +177,7 @@ if submitted:
 
     st.pyplot(fig)
 
-# Provide tips based on feature importance
+    # Provide tips based on feature importance
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
         st.write("- *Systolic Blood Pressure (ap_hi)*: Regular exercise, a low-sodium diet, and stress management can help.")
@@ -173,6 +193,7 @@ if submitted:
         st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
+
 # Motivational quotes
     st.markdown(
         """
@@ -185,5 +206,3 @@ if submitted:
         """,
         unsafe_allow_html=True
     )
-
-

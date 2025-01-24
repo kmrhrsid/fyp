@@ -5,13 +5,7 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import base64
-import base64
 
-
-
-
-# Add your background image here
-add_background_image("images.jpg")
 
 # Function to encode the image in Base64
 def add_background_image(image_path):
@@ -30,7 +24,8 @@ def add_background_image(image_path):
     st.markdown(background_style, unsafe_allow_html=True)
 
 # Add your background image here
-add_background_image("loan background.jpg")
+add_background_image("images.jpg")
+
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

@@ -7,17 +7,25 @@ import seaborn as sns
 
 import streamlit as st
 
-# Add background image from a local file
-st.markdown(
-    """
+import streamlit as st
+
+# Function to set the background image using a GitHub URL
+def add_background_image(image_url):
+    background_style = f"""
     <style>
-    .stApp {
-        background-image: url('/images.jpg');  # Use your image file name
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("{image_url}");
         background-size: cover;
-        background-position: center;
-    }
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
     </style>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(background_style, unsafe_allow_html=True)
+
+# Add the background image from the GitHub raw URL
+add_background_image("https://raw.githubusercontent.com/username/repository/branch/images.jpg")  # Replace with your GitHub image URL
+
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')

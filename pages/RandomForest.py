@@ -23,8 +23,8 @@ def add_background_image(image_path):
     """
     st.markdown(background_style, unsafe_allow_html=True)
 
-# Add your background image here
-add_background_image("hp3 (1).jpg") 
+# Add your background image for the homepage here
+add_background_image("hp3 (1).jpg")
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -43,6 +43,23 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
+# Function to set a background image for Prediction and Insights pages
+def add_page_background(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode()
+    background_style = f"""
+    <style>
+    .prediction-insight-background {{
+        background-image: url("data:image/png;base64,{encoded_image}");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }}
+    </style>
+    """
+    st.markdown(background_style, unsafe_allow_html=True)
+
+# Homepage
 def homepage():
     st.markdown(
         """
@@ -51,17 +68,17 @@ def homepage():
         </h1>
         <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 40px; text-align: center;">
         <i>"The greatest wealth is health"</i>
-         <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
+        </p>
+        <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.
         </p>
         """,
         unsafe_allow_html=True
     )
 
-    
-
 # Prediction Page
 def prediction_page():
+    add_page_background("homepage.png")  # Background image for the prediction page
     st.subheader("Hi Dear, Enter Your Details")
     
     # User input form
@@ -158,6 +175,7 @@ def prediction_page():
 
 # Insights Page
 def insights_page():
+    add_page_background("homepage.png")  # Background image for the insights page
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 

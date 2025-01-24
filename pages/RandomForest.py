@@ -77,7 +77,7 @@ def prediction_page():
         gender_encoded = 1 if gender == "Male" else 0
         cholesterol_encoded = {"Normal": 1, "Above Normal": 2, "High": 3}[cholesterol]
         bmi = round(weight / ((height / 100) ** 2), 1)
-
+        <h2 style="color: white
         input_data = pd.DataFrame({
             'age_years': [age],
             'gender': [gender_encoded],

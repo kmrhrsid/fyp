@@ -4,22 +4,6 @@ import plotly.graph_objects as go
 import joblib
 import matplotlib.pyplot as plt
 
-# Set the background image using CSS
-background_image_url = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fvectors%2Fgradient-png&psig=AOvVaw0EgaLIGYvnF6QSj61Gg-hL&ust=1737777326553000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOiA2Zq7jYsDFQAAAAAdAAAAABAE"  # Direct image URL
-st.markdown(
-    f"""
-    <style>
-    .reportview-container {{
-        background: url({background_image_url}) no-repeat center center fixed;
-        background-size: cover;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-# Add your background image here
-add_background_image("images.jpg")
-
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

@@ -23,8 +23,8 @@ def add_background_image(image_path):
     """
     st.markdown(background_style, unsafe_allow_html=True)
 
-# Add your background image here
-add_background_image("images.jpg")
+# Add your background image for the homepage here
+add_background_image("hp3 (1).jpg")
 
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
@@ -43,41 +43,42 @@ feature_importances = {
 # Convert to a pandas Series for easier manipulation
 feature_importance_series = pd.Series(feature_importances).sort_values(ascending=False)
 
+# Function to set a background image for Prediction and Insights pages
+def add_page_background(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode()
+    background_style = f"""
+    <style>
+    .prediction-insight-background {{
+        background-image: url("data:image/png;base64,{encoded_image}");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }}
+    </style>
+    """
+    st.markdown(background_style, unsafe_allow_html=True)
 
+# Homepage
 def homepage():
-    set_background()  # Set the background image
     st.markdown(
         """
-        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
+        <h1 style="font-family: 'Arial', cursive; color:#eca714 ; font-size: 70px; text-align: center;">
+        Cardiovascular     Risk Prediction
         </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
+        <p style="font-family: 'CabinSketch Bold', cursive; color:white ; font-size: 40px; text-align: center;">
         <i>"The greatest wealth is health"</i>
         </p>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-# Home Page
-def homepage():
-    st.markdown(
-        """
-        <h1 style="font-family: 'Arial', cursive; color: Black; font-size: 65px; text-align: center;">
-        Cardiovascular Risk Prediction🫀
-        </h1>
-        <p style="font-family: 'CabinSketch Bold', cursive; color: Green ; font-size: 20px; text-align: center;">
-        <i>"The greatest wealth is health"</i>
-         <p style="font-family: 'Arial', cursive; color: Black; font-size: 10px; text-align: center;">
+        <p style="font-family: 'Arial', cursive; color:white; font-size: 15px; text-align: center;">
         Welcome to the Cardiovascular Risk Prediction system. You can use this app to predict the likelihood of cardiovascular disease and get insights based on your health data.
         </p>
         """,
         unsafe_allow_html=True
     )
-    
 
 # Prediction Page
 def prediction_page():
+    add_page_background("homepage.png")  # Background image for the prediction page
     st.subheader("Hi Dear, Enter Your Details")
     
     # User input form
@@ -174,6 +175,7 @@ def prediction_page():
 
 # Insights Page
 def insights_page():
+    add_page_background("homepage.png")  # Background image for the insights page
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
@@ -206,19 +208,19 @@ def insights_page():
 
     st.markdown("### Tips for Reducing Cardiovascular Risk:")
     if 'ap_hi' in feature_importance_series.index:
-        st.write("- Systolic Blood Pressure (ap_hi): Regular exercise, a low-sodium diet, and stress management can help.")
+        st.write("- *Systolic Blood Pressure (ap_hi)*: Regular exercise, a low-sodium diet, and stress management can help.")
     if 'weight' in feature_importance_series.index:
-        st.write("- Weight: Maintain a healthy weight through a balanced diet and regular physical activity.")
+        st.write("- *Weight*: Maintain a healthy weight through a balanced diet and regular physical activity.")
     if 'height' in feature_importance_series.index:
-        st.write("- Height (BMI): Focus on achieving a healthy BMI through diet and exercise.")
+        st.write("- *Height (BMI)*: Focus on achieving a healthy BMI through diet and exercise.")
     if 'age_years' in feature_importance_series.index:
-        st.write("- Age: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
+        st.write("- *Age*: Regular health checkups and a heart-healthy lifestyle become more crucial as you age.")
     if 'ap_lo' in feature_importance_series.index:
-        st.write("- Diastolic Blood Pressure (ap_lo): Monitor and manage through diet, exercise, and medication if needed.")
+        st.write("- *Diastolic Blood Pressure (ap_lo)*: Monitor and manage through diet, exercise, and medication if needed.")
     if 'cholesterol' in feature_importance_series.index:
-        st.write("- Cholesterol: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
+        st.write("- *Cholesterol*: Eat more fiber, reduce saturated fats, and consult a doctor if levels are high.")
     if 'gender' in feature_importance_series.index:
-        st.write("- Gender: Risk differences may exist, but focus on modifiable factors for prevention.")
+        st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
 
     # Motivational quotes
     st.markdown(
@@ -245,5 +247,5 @@ def main():
     elif page == "Insights":
         insights_page()
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()

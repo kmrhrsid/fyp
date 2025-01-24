@@ -18,6 +18,22 @@ def set_background(image_path):
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}
+    /* Customizing input text color */
+    label {{
+        color: white;
+        font-weight: bold;
+    }}
+    input {{
+        color: white !important;
+    }}
+    select {{
+        color: white !important;
+    }}
+    .stButton button {{
+        background-color: #eca714;
+        color: white;
+        border-radius: 5px;
+    }}
     </style>
     """
     st.markdown(background_style, unsafe_allow_html=True)
@@ -57,20 +73,20 @@ def homepage():
 
 # Prediction Page
 def prediction_page():
-    set_background("hp44.jpg")
+    set_background("hp11.jpg")
     st.markdown(
         """
         <h2 style="color: white;">Enter Your Details for Prediction</h2>
         """, unsafe_allow_html=True
     )
     with st.form("user_input_form"):
-        age = st.slider('Age (years)', min_value=20, max_value=80, value=50,color:white)
-        gender = st.selectbox("Gender", ["Female", "Male"], color:white)
-        height = st.number_input("Height (cm)", min_value=100, max_value=250,color:white)
-        weight = st.number_input("Weight (kg)", min_value=30, max_value=200,color:white)
-        ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0,color:white)
-        ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0,color:white)
-        cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"],color:white)
+        age = st.slider('Age (years)', min_value=20, max_value=80, value=50)
+        gender = st.selectbox("Gender", ["Female", "Male"])
+        height = st.number_input("Height (cm)", min_value=100, max_value=250)
+        weight = st.number_input("Weight (kg)", min_value=30, max_value=200)
+        ap_lo = st.number_input("Low Blood Pressure (mmHg)", min_value=0)
+        ap_hi = st.number_input("High Blood Pressure (mmHg)", min_value=0)
+        cholesterol = st.selectbox("Cholesterol level", ["Normal", "Above Normal", "High"])
         submitted = st.form_submit_button("Submit")
 
     if submitted:
@@ -114,7 +130,7 @@ def prediction_page():
 
 # Insights Page
 def insights_page():
-    set_background("hp44.jpg")
+    set_background("hp11.jpg")
     st.markdown(
         """
         <h2 style="color: white;">Risk Factor Insights</h2>

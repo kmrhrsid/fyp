@@ -58,7 +58,6 @@ def homepage():
         unsafe_allow_html=True
     )
 
-    
 
 # Prediction Page
 def prediction_page():

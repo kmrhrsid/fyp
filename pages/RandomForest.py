@@ -117,12 +117,12 @@ def prediction_page():
 
         with col1:
             # Cardiovascular Risk with thumbs up or down
-            thumbs_icon_risk = "ـــــــــــــــــﮩ٨ـ❤️️" if risk_percentage <= 50 else "👎"
+            thumbs_icon_risk = "ــــــــــﮩ٨ـ❤️️" if risk_percentage <= 50 else "👎"
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px; color: white;">Cardiovascular Risk (%)</h3>
-                <p style="font-size: 24px; color: DarkSlateGray;">{risk_percentage}%</p>
+                <h3 style="font-size: 18px; color: black;">Cardiovascular Risk (%)</h3>
+                <p style="font-size: 24px; color: black ;">{risk_percentage}%</p>
                 <p style="font-size: 20px; color: {'red' if risk_percentage > 50 else 'green'};">{'High' if risk_percentage > 50 else 'Low'}</p>
                 <p style="font-size: 40px;">{thumbs_icon_risk}</p>
                 </div>
@@ -132,12 +132,12 @@ def prediction_page():
 
         with col2:
             # BMI with thumbs up for healthy
-            thumbs_icon_bmi = "ـــــــــــــــــﮩ٨ـ❤️️" if 18.5 <= bmi <= 24.9 else "👎"
+            thumbs_icon_bmi = "ــــــــــﮩ٨ـ❤️️" if 18.5 <= bmi <= 24.9 else "👎"
             st.markdown(
                 f"""
                 <div style="width: 250px; height: 250px; border: 2px solid #ccc; padding: 10px; border-radius: 10px; text-align: center; font-family: 'CabinSketch', cursive;">
-                <h3 style="font-size: 18px; color: white;">BMI (Body Mass Index)</h3>
-                <p style="font-size: 24px; color: DarkSlateGray;">{bmi}</p>
+                <h3 style="font-size: 18px; color:black;">BMI (Body Mass Index)</h3>
+                <p style="font-size: 24px; color:black;">{bmi}</p>
                 <p style="font-size: 20px; color: {'green' if 18.5 <= bmi <= 24.9 else 'red'};">{'Normal' if 18.5 <= bmi <= 24.9 else 'Unhealthy'}</p>
                 <p style="font-size: 40px;">{thumbs_icon_bmi}</p>
                 </div>

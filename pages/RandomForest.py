@@ -151,17 +151,35 @@ elif app_mode == "Prediction":
         st.plotly_chart(gauge_fig)
 
 elif app_mode == "Key Insights":
-    # Display feature importance with gradient colors
+      # Display feature importance with gradient colors and curved bars
     st.subheader("Risk Factor Insights")
     st.write("The following chart shows the relative importance of each feature in predicting cardiovascular risk:")
 
     # Gradient colors for bars
-    colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e'][:len(feature_importance_series)]
+    colors = ['#1f77b4', '#6baed6', '#9ecae1', '#d62728', '#ff9896', '#e377c2', '#ff7f0e']
 
-    fig, ax = plt.subplots()
-    feature_importance_series.plot(kind='bar', ax=ax, color=colors)
-    ax.set_title("Feature Importance")
-    ax.set_ylabel("Importance Score")
+    # Create curved bar chart using Seaborn
+    fig, ax = plt.subplots(figsize=(8, 5))
+    sns.barplot(
+        x=feature_importance_series.values,
+        y=feature_importance_series.index,
+        palette=colors,
+        ax=ax,
+        linewidth=2,
+        edgecolor="black"
+    )
+
+    # Set titles and labels
+    ax.set_title("Feature Importance", fontsize=16, weight='bold')
+    ax.set_xlabel("Importance Score", fontsize=12)
+    ax.set_ylabel("Features", fontsize=12)
+
+    # Format the bars with rounded edges
+    for bar in ax.patches:
+        bar.set_linewidth(2)
+        bar.set_edgecolor("black")
+        bar.set_capstyle('round')
+
     st.pyplot(fig)
 
     # Provide tips based on feature importance

@@ -17,10 +17,6 @@ st.markdown(
     </style>
     """, unsafe_allow_html=True)
 
-st.title('Your Streamlit App with Solid Background')
-st.write("Content goes here.")
-
-
 # Load the trained model
 model = joblib.load('random_forest_model (1).pkl')
 

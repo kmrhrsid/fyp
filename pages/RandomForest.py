@@ -175,3 +175,17 @@ if submitted:
         st.write("- *Gender*: Risk differences may exist, but focus on modifiable factors for prevention.")
 
 
+# Motivational quotes
+    st.markdown(
+        """
+        <p style="font-family: 'CabinSketch', cursive; color: Green ; font-size: 60px; text-align: center;">
+        <i>من جدّ وجد</i>
+        </p>
+        <p style="font-family: 'Arial', cursive; color: Black ; font-size: 40px; text-align: center;">
+        <i>"Whoever works really hard, will succeed"</i>
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+

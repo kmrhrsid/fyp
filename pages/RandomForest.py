@@ -18,22 +18,6 @@ def set_background(image_path):
         background-repeat: no-repeat;
         background-attachment: fixed;
     }}
-    /* Customizing input text color */
-    label {{
-        color: white;
-        font-weight: bold;
-    }}
-    input {{
-        color: white !important;
-    }}
-    select {{
-        color: white !important;
-    }}
-    .stButton button {{
-        background-color: #eca714;
-        color: white;
-        border-radius: 5px;
-    }}
     </style>
     """
     st.markdown(background_style, unsafe_allow_html=True)
@@ -73,7 +57,7 @@ def homepage():
 
 # Prediction Page
 def prediction_page():
-    set_background("hp11.jpg")
+    set_background("hp44.jpg")  # Updated background image
     st.markdown(
         """
         <h2 style="color: white;">Enter Your Details for Prediction</h2>
@@ -130,7 +114,7 @@ def prediction_page():
 
 # Insights Page
 def insights_page():
-    set_background("hp11.jpg")
+    set_background("hp44.jpg")  # Updated background image
     st.markdown(
         """
         <h2 style="color: white;">Risk Factor Insights</h2>
